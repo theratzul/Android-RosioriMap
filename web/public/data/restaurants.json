@@ -1,0 +1,1640 @@
+[
+ {
+  "id": "restaurant-maria",
+  "name": "Restaurant Maria – Covorul Verde",
+  "type": "restaurant",
+  "cuisine": "Românească, internațională, pizza",
+  "description": "Pensiune-restaurant cu grădină și terasă, bucătărie tradițională românească și meniul zilei.",
+  "address": "Str. Mihail Kogălniceanu nr. 19",
+  "lat": 44.11862,
+  "lng": 24.99192,
+  "phone": "0766 646 845",
+  "website": "https://restaurant-maria-rosiori.ro",
+  "hours": {
+   "default": "08:00-23:00"
+  },
+  "capacity": 80,
+  "priceLevel": 2,
+  "features": [
+   "Terasă",
+   "Grădină",
+   "Parcare",
+   "Wi-Fi",
+   "Meniul zilei"
+  ],
+  "reservable": true,
+  "menu": [
+   {
+    "category": "Mic dejun",
+    "items": [
+     {
+      "name": "Brunch-ul Casei",
+      "desc": "1 buc pâine toast 25 gr, 1 buc ou poșat 60-70 gr, 20 gr roșii cherry, 20 gr bacon, 5 gr salată verde, sos olandez",
+      "price": 15.0
+     },
+     {
+      "name": "Ou posat simplu",
+      "desc": "1 buc ou poșat 60-70 gr",
+      "price": 8.0
+     },
+     {
+      "name": "Ou fiert",
+      "desc": "1 buc ou fiert 60-70 gr",
+      "price": 8.0
+     },
+     {
+      "name": "Ochiuri simple",
+      "desc": "2 ouă",
+      "price": 15.0
+     },
+     {
+      "name": "Omletă simplă",
+      "desc": "2 ouă",
+      "price": 22.0
+     },
+     {
+      "name": "Omletă cu șuncă și cașcaval",
+      "desc": "2 ouă, șuncă, cașcaval",
+      "price": 26.0
+     },
+     {
+      "name": "Omletă cu bacon și ciuperci",
+      "desc": "bacon, ciuperci, 2 ouă",
+      "price": 26.0
+     },
+     {
+      "name": "Omletă țărănească",
+      "desc": "bacon, ardei, ceapă, 2 ouă",
+      "price": 26.0
+     },
+     {
+      "name": "★ Platou rece al casei",
+      "desc": "salam, bacon, brânză telemea, cașcaval, roșie, castravete, măsline",
+      "price": 35.0
+     },
+     {
+      "name": "Cașcaval pane",
+      "desc": "200 gr cașcaval",
+      "price": 30.0
+     },
+     {
+      "name": "Unt de masă",
+      "desc": "30 gr unt",
+      "price": 6.0
+     },
+     {
+      "name": "Dulceată de căpșuni",
+      "desc": "30 gr dulceată de căpșuni",
+      "price": 6.0
+     },
+     {
+      "name": "Dulceată de fructe de pădure",
+      "desc": "30 gr dulceată de fructe de pădure",
+      "price": 6.0
+     },
+     {
+      "name": "Dulceată de afine",
+      "desc": "30 gr dulceată de afine",
+      "price": 6.0
+     },
+     {
+      "name": "Dulceată de vișine",
+      "desc": "30 gr dulceată de vișine",
+      "price": 6.0
+     },
+     {
+      "name": "Miere de albine",
+      "desc": "30 gr miere",
+      "price": 6.0
+     },
+     {
+      "name": "Cașcaval natur",
+      "desc": "50 gr cașcaval",
+      "price": 7.0
+     },
+     {
+      "name": "Șuncă toast",
+      "desc": "50 gr șuncă",
+      "price": 7.0
+     },
+     {
+      "name": "Salam crud uscat",
+      "desc": "50 gr salam",
+      "price": 7.0
+     },
+     {
+      "name": "Bacon",
+      "desc": "50 gr bacon",
+      "price": 7.0
+     },
+     {
+      "name": "Brânză telemea",
+      "desc": "50 gr brânză telemea",
+      "price": 7.0
+     },
+     {
+      "name": "Măsline",
+      "desc": "100 gr măsline negre, verzi",
+      "price": 7.0
+     },
+     {
+      "name": "Roșie natur",
+      "desc": "100 gr roșie",
+      "price": 7.0
+     },
+     {
+      "name": "Castravete natur",
+      "desc": "50 gr castravete",
+      "price": 7.0
+     },
+     {
+      "name": "Ceapă roșie",
+      "desc": "50 gr ceapă roșie",
+      "price": 5.0
+     },
+     {
+      "name": "Chifle",
+      "desc": "1 bucată, 50 gr",
+      "price": 2.0
+     }
+    ]
+   },
+   {
+    "category": "Ciorbe & supe",
+    "items": [
+     {
+      "name": "Meniu Zilnic",
+      "desc": "Ciorbă la alegere și mâncare gătită a zilei. Vă rugăm întrebați ospătarul.",
+      "price": 40.0
+     },
+     {
+      "name": "Supă cremă",
+      "desc": "300 gr supă cremă de legume: roșii / ciuperci / broccoli / morcov, crutoane",
+      "price": 25.0
+     },
+     {
+      "name": "Ciorbă de perișoare",
+      "desc": "350 gr, perișoare de carne, legume",
+      "price": 22.0
+     },
+     {
+      "name": "★ Ciorbă de burtă",
+      "desc": "350 gr burtă, smântână, oțet, usturoi",
+      "price": 27.0
+     },
+     {
+      "name": "Ciorbă de văcuță",
+      "desc": "350 gr carne vită, legume",
+      "price": 22.0
+     },
+     {
+      "name": "Ciorbă de fasole cu afumătură",
+      "desc": "350 gr fasole, afumătură",
+      "price": 22.0
+     },
+     {
+      "name": "Ciorbă de pui",
+      "desc": "350 gr pui, legume",
+      "price": 22.0
+     },
+     {
+      "name": "Ciorbă de legume",
+      "desc": "300 gr legume",
+      "price": 22.0
+     }
+    ]
+   },
+   {
+    "category": "Salate",
+    "items": [
+     {
+      "name": "Salată de pui cu sos Dijon",
+      "desc": "piept de pui 180 gr, salată iceberg 100 gr, roșii 100 gr, castraveți 100 gr, lămâie, muștar, miere, sare, piper, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "Salată Kimchi",
+      "desc": "varză albă și roșie, sos de roșii picant, piept de pui prăjit, susan, dressing, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "★ Salată Caesar",
+      "desc": "salată iceberg, piept de pui, bacon, crutoane, parmezan, dressing, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "Salată de ton",
+      "desc": "salată verde, roșii, castraveți, porumb, ceapă roșie, ton, lămâie, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "Salată Bulgărească",
+      "desc": "salată verde, roșii, castraveți, ardei gras, șuncă, măsline, ou, telemea, ceapă roșie, dressing, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "Salată Grecească",
+      "desc": "ardei gras, roșii, castraveți, măsline, ceapă roșie, ulei de măsline, lămâie, brânză feta, dressing, oregano, focaccia 100 gr",
+      "price": 38.0
+     },
+     {
+      "name": "Salată de creveți",
+      "desc": "creveți 150 gr, salată iceberg 50 gr, castraveți 50 gr, morcovi 20 gr, țelină 20 gr, sos sweet chili 30 gr, ulei 20 ml, unt 10 gr, sos de rodie, sos de soia, focaccia 150 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Salată Coleslaw",
+      "desc": "morcov 20 gr, varză albă și roșie 80 gr, maioneză 30 gr, usturoi 20 gr",
+      "price": 15.0
+     }
+    ]
+   },
+   {
+    "category": "Pui",
+    "items": [
+     {
+      "name": "Noodles cu pui",
+      "desc": "piept de pui 150 gr, paste 100 gr, morcovi 60 gr, țelină 60 gr, ardei gras 60 gr, ceapă 60 gr, salată iceberg 80 gr, susan, ulei, sos sweetchilli, sos soia, sos teriyaki, sare, piper, urechi de lemn",
+      "price": 50.0
+     },
+     {
+      "name": "★ Pui cu ciuperci și gran cucina",
+      "desc": "piept de pui 200 gr, ciuperci 150 gr, gran cucina 150 gr, sare, piper, usturoi, unt",
+      "price": 48.0
+     },
+     {
+      "name": "Quesadilla de pui",
+      "desc": "piept de pui 150 gr, tortilla, ceapă 50 gr, ardei gras 50 gr, porumb 30 gr, mozzarella 100 gr, cartofi prăjiți 150 gr, sare, piper, sos sweetchilli",
+      "price": 50.0
+     },
+     {
+      "name": "Burger de pui",
+      "desc": "burger de pui preparat în casă, 300 gr, servit cu cartofi deep fry",
+      "price": 45.0
+     },
+     {
+      "name": "Piept de pui la grătar",
+      "desc": "200 gr piept de pui",
+      "price": 28.0
+     },
+     {
+      "name": "Pulpe de pui la grătar",
+      "desc": "150 gr pulpe de pui",
+      "price": 20.0
+     },
+     {
+      "name": "Pui Shanghai",
+      "desc": "150 gr pui, 50 gr sos de smântână și usturoi",
+      "price": 26.0
+     },
+     {
+      "name": "Ficăței de pasăre la tigaie",
+      "desc": "200 gr ficăței de pasăre",
+      "price": 27.0
+     },
+     {
+      "name": "Șnițel de pui vienez",
+      "desc": "piept de pui, făină, ou, pesmet, condimente, 250 gr",
+      "price": 30.0
+     },
+     {
+      "name": "Cordon bleu de pui",
+      "desc": "piept de pui 200 gr, șuncă 100 gr, cașcaval 150 gr, garnitură cartofi pai, salată de varză 50 gr",
+      "price": 60.0
+     },
+     {
+      "name": "Aripioare de pui picante",
+      "desc": "aripioare de pui 300 gr, pastă ardei iute 50 gr, sos sweetchilli, soia, sos samurai 60 gr, sare, piper, ulei, lămâie",
+      "price": 39.0
+     },
+     {
+      "name": "Pui crispy",
+      "desc": "piept de pui 200 gr, fulgi de porumb 100 gr, făină, ou, fulgi chilly, sos samurai 60 gr, sare, piper",
+      "price": 39.0
+     },
+     {
+      "name": "Pui sweet chilly cu orez prăjit",
+      "desc": "piept de pui 200 gr, orez 80 gr, ceapă 30 gr, ardei gras roșu 50 gr, sos sweet chilly 40 gr, susan, făină, ou, unt, sare, piper, ulei",
+      "price": 39.0
+     }
+    ]
+   },
+   {
+    "category": "Porc & vită",
+    "items": [
+     {
+      "name": "★ Medalion de porc cu unt și usturoi",
+      "desc": "mușchiuleț de porc 200 gr, pătrunjel 20 gr, sare, piper, ulei, unt, usturoi, salată",
+      "price": 65.0
+     },
+     {
+      "name": "Ciolan afumat cu fasole",
+      "desc": "ciolan afumat 600 gr, fasole / varză călită 300 gr, morcov, păstârnac, țelină, ceapă, sare, piper",
+      "price": 70.0
+     },
+     {
+      "name": "Sarmale cu mămăligă",
+      "desc": "spată de porc tocată 150 gr, varză murată 200 gr, orez 30 gr, pastă de tomate 20 gr, sare, piper, foi de dafin, mămăligă (3 bucăți)",
+      "price": 39.0
+     },
+     {
+      "name": "Cotlet de porc la grătar",
+      "desc": "200 gr cotlet de porc",
+      "price": 35.0
+     },
+     {
+      "name": "Mușchiuleț de porc la grătar",
+      "desc": "200 gr mușchiuleț de porc",
+      "price": 55.0
+     },
+     {
+      "name": "Ceafă de porc la grătar",
+      "desc": "200 gr ceafă de porc",
+      "price": 30.0
+     },
+     {
+      "name": "Șnițel de porc vienez",
+      "desc": "cotlet de porc, făină, ou, pesmet, condimente, 200 gr",
+      "price": 40.0
+     },
+     {
+      "name": "Coaste de porc marinate",
+      "desc": "coaste de porc 500 gr, cartofi țărănești 150 gr, sos 50 gr",
+      "price": 57.0
+     },
+     {
+      "name": "Mușchi de vită la grătar",
+      "desc": "250 gr mușchiuleț de vită. Vă rugăm adresați ospătarului modul de preparare.",
+      "price": 70.0
+     },
+     {
+      "name": "Antricot de vită maturat la grill cu legume la wok",
+      "desc": "antricot de vită 250 gr, morcov 60 gr, țelină 60 gr, ardei 60 gr, ceapă 60 gr, salată 10 gr, unt, coniac, sare, piper",
+      "price": 90.0
+     },
+     {
+      "name": "Noodles cu vită",
+      "desc": "antricot de vită 125 gr, tăiței noodles 100 gr, morcovi 60 gr, țelină 60 gr, ardei gras 60 gr, ceapă verde 20 gr, salată iceberg 80 gr, susan, ulei, sos sweetchilli, sos soia, sos teriyaki, sare, piper, urechi de lemn",
+      "price": 60.0
+     },
+     {
+      "name": "Vită pe plită încinsă",
+      "desc": "antricot de vită 150 gr, ulei, unt, coniac, morcovi 60 gr, țelină 60 gr, ardei 60 gr, ceapă 60 gr, susan, sos sweetchilli, sos soia, sos teriyaki, sare, piper, urechi de lemn",
+      "price": 70.0
+     },
+     {
+      "name": "Cotlete de berbecuț Noua Zeelandă la grill cu salată mixtă",
+      "desc": "cotlete berbecuț Noua Zeelandă 350 gr, roșii 100 gr, castraveți 100 gr, pătrunjel 20 gr, miere 5 gr, sare, piper, ardei iute",
+      "price": 95.0
+     }
+    ]
+   },
+   {
+    "category": "Pește & fructe de mare",
+    "items": [
+     {
+      "name": "Hamsie",
+      "desc": "hamsii 200 gr, mălai, făină, ulei, sare",
+      "price": 20.0
+     },
+     {
+      "name": "Saramură de păstrăv",
+      "desc": "păstrăv 350 gr, roșii 100 gr, ceapă 100 gr, ardei 100 gr, roșii cuburi 100 gr, pătrunjel 20 gr, usturoi 10 gr, ulei, sare, piper, boia dulce, ardei iute 20 gr",
+      "price": 70.0
+     },
+     {
+      "name": "Somon la grill cu legume la wok",
+      "desc": "somon 250 gr, ceapă 60 gr, morcovi 60 gr, țelină 60 gr, ardei gras 60 gr, ulei, sare, piper, condimente pește, lămâie 30 gr",
+      "price": 75.0
+     },
+     {
+      "name": "Păstrăv la grătar",
+      "desc": "250-300 gr păstrăv",
+      "price": 45.0
+     },
+     {
+      "name": "Doradă la grătar",
+      "desc": "350-400 gr doradă",
+      "price": 60.0
+     },
+     {
+      "name": "Somon la grătar",
+      "desc": "250-300 gr file de somon",
+      "price": 60.0
+     },
+     {
+      "name": "Midii în sos de roșii",
+      "desc": "midii 500 gr, roșii cherry 100 gr, sos roșii 100 gr, usturoi, pătrunjel 20 gr, unt 10 gr, vin, sare, piper, condimente, lămâie 50 gr, sos sweetchilli, pâine",
+      "price": 65.0
+     },
+     {
+      "name": "Midii în sos de vin și usturoi",
+      "desc": "midii 500 gr, vin, usturoi 10 gr, sare, piper, pătrunjel 20 gr, lămâie 50 gr, condimente pește, sos sweetchilli, pâine 60 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Creveți tempura cu cartofi",
+      "desc": "creveți 350 gr, cartofi 200 gr, ulei, făină, ouă, piper, lămâie 50 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Creveți în sos de vin și usturoi",
+      "desc": "creveți 350 gr, vin, gran cucina 50 gr, usturoi 20 gr, lămâie 30 gr, unt 20 gr, pătrunjel 20 gr, sare, piper, ulei",
+      "price": 65.0
+     },
+     {
+      "name": "Tigaie picantă cu creveți",
+      "desc": "creveți 350 gr, sos de roșii 150 gr, unt, lămâie 30 gr, roșii cherry 50 gr, usturoi 20 gr, pătrunjel 15 gr, sos sweetchilli, vin",
+      "price": 65.0
+     },
+     {
+      "name": "Tigaie picantă cu fructe de mare",
+      "desc": "creveți 100 gr, baby calamar 100 gr, carne scoică 100 gr, inele calamar 100 gr, baby caracatiță 100 gr, roșii cherry 50 gr, sos de roșii 100 gr, unt, lămâie 50 gr, ulei de măsline, usturoi 15 gr, pătrunjel, sos sweetchilli, vin, sare, piper",
+      "price": 65.0
+     },
+     {
+      "name": "Tigaie picantă cu carne de scoici",
+      "desc": "carne scoică 350 gr, roșii cherry 100 gr, usturoi 15 gr, sos de roșii 100 gr, unt, lămâie 50 gr, ulei de măsline, pătrunjel, sos sweetchilli 50 gr, vin, ardei iute, sare, piper",
+      "price": 65.0
+     },
+     {
+      "name": "Fritto Misto",
+      "desc": "creveți 130 gr, file salău 130 gr, carne scoică 130 gr, inele calamar 130 gr, cartofi 150 gr, ouă, făină, ulei, lămâie 30 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Platou cu fructe de mare",
+      "desc": "creveți tempura 300 gr, file salău 130 gr, păstrăv grill 350 gr, inele calamar 300 gr, tentacule calamar 250 gr, midii la wok 500 gr, ou, usturoi 10 gr, roșii cherry 100 gr, făină, lămâie 100 gr, unt, sare, piper, sos sweetchilli 50 gr, dovlecel 60 gr, roșii 60 gr, ardei gras 60 gr, vinete 60 gr, ciuperci 60 gr, ceapă 60 gr, pătrunjel 30 gr (pentru 2 persoane)",
+      "price": 250.0
+     },
+     {
+      "name": "Tentacule de calamar la grill cu salată",
+      "desc": "tentacule de calamar 250 gr, mixt de salată 200 gr, rodie 30 gr, sos rodie, ulei, unt, sare, piper, lămâie 30 gr, sos teriyaki, oțet balsamic, fenicul, ghimbir, focaccia 60 gr",
+      "price": 80.0
+     }
+    ]
+   },
+   {
+    "category": "Burgeri",
+    "items": [
+     {
+      "name": "Smashburger de pui cu ou, cartofi și sos",
+      "desc": "piept de pui 70 gr, pulpă de pui 70 gr, chiflă 100 gr, cartofi 150 gr, ou, salată iceberg / varză albă 50 gr, maioneză 25 gr, usturoi 5 gr, sare, piper, cheddar 50 gr, castraveți murați 30 gr, sos 60 gr",
+      "price": 46.0
+     },
+     {
+      "name": "Quesadilla Crispy cu sos de maioneză și usturoi",
+      "desc": "tortilla 80 gr, piept de pui 130 gr, cartofi 150 gr, mozzarella 100 gr, cheddar 50 gr, maioneză 80 gr, usturoi 10 gr, ulei, sare, piper",
+      "price": 55.0
+     },
+     {
+      "name": "Burger Vită cu sos cheddar",
+      "desc": "carne de vită 200 gr, chiflă 100 gr, cașcaval Cheddar 40 gr, sos Cheddar 30 gr, ceapă caramelizată 50 gr, salată iceberg 20 gr, roșii 20 gr, castraveți murați 20 gr, maioneză cu usturoi 20 gr, cartofi prăjiți 150 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Burger Crispy de Pui",
+      "desc": "piept de pui 150 gr, chiflă 100 gr, cașcaval Cheddar 20 gr, salată coleslaw 100 gr (morcov 10 gr, varză albă 30 gr, varză roșie 30 gr, maioneză 20 gr, usturoi 10 gr), fulgi de porumb 30 gr, jumătate de ou, făină 10 gr",
+      "price": 46.0
+     },
+     {
+      "name": "Big Burger",
+      "desc": "burger de vită preparat în casă, 300 gr, servit cu cartofi deep fry",
+      "price": 55.0
+     }
+    ]
+   },
+   {
+    "category": "Specialități",
+    "items": [
+     {
+      "name": "Specialitate Indiană",
+      "desc": "ceafă de porc, piept pui, chimen, ardei, ceapă, usturoi, coriandru, curcumă, sos de roșii, condimente, 350 gr",
+      "price": 50.0
+     },
+     {
+      "name": "Specialitate Indiană cu orez",
+      "desc": "ceafă de porc, piept pui, chimen, ardei, orez, ceapă, usturoi, coriandru, curcumă, sos de roșii, condimente, 450 gr",
+      "price": 60.0
+     },
+     {
+      "name": "★ Tochitură moldovenească",
+      "desc": "ceafă de porc, piept pui, cârnați, ardei, ceapă, usturoi, cimbru, vin roșu, mămăligă, ou, brânză, sos roșu, condimente, 450 gr",
+      "price": 50.0
+     },
+     {
+      "name": "Pomana Porcului cu mămăligă",
+      "desc": "300 gr / 150 gr garnitură",
+      "price": 42.0
+     },
+     {
+      "name": "Tigaie picantă cu legume",
+      "desc": "ceafă de porc, piept de pui, ceapă, ardei gras, vin roșu, usturoi, 400 gr",
+      "price": 48.0
+     },
+     {
+      "name": "Pastramă de miel la grătar",
+      "desc": "200 gr pastramă de miel",
+      "price": 43.0
+     },
+     {
+      "name": "Pastramă de miel la tuci cu mămăligă",
+      "desc": "200 gr pastramă de miel, 150 gr mămăligă",
+      "price": 48.0
+     },
+     {
+      "name": "M.B.S.",
+      "desc": "300 gr mămăligă cu brânză și smântână",
+      "price": 25.0
+     },
+     {
+      "name": "Mixt grill",
+      "desc": "2 mici, ceafă de porc 100 gr, piept de pui 100 gr, ficăței 100 gr, cartofi prăjiți 100 gr, salată murături 100 gr",
+      "price": 65.0
+     },
+     {
+      "name": "Platou cald",
+      "desc": "ceafă de porc 100 gr, piept de pui 100 gr, pastramă 100 gr, cârnăciori 100 gr, ficăței 100 gr, ciuperci la grătar 100 gr, cartofi prăjiți 100 gr, salată de murături 150 gr",
+      "price": 85.0
+     },
+     {
+      "name": "Mici",
+      "desc": "70 gr mici din carne de vită și porc",
+      "price": 7.0
+     },
+     {
+      "name": "Cârnați oltenești",
+      "desc": "200 gr cârnați oltenești",
+      "price": 22.0
+     },
+     {
+      "name": "Bulete de cașcaval",
+      "desc": "200 gr bulete de cașcaval",
+      "price": 25.0
+     },
+     {
+      "name": "Măsline pane",
+      "desc": "măsline verzi 100 gr, ou, făină, pesmet, sare, piper, ulei, lămâie",
+      "price": 20.0
+     },
+     {
+      "name": "1/2 pui prăjit cu sos de smântână, mujdei, mărar și mămăligă",
+      "desc": "700 gr, 1/2 de pui prăjit îmbrăcat în sos de smântână cu mujdei și mărar, servit cu mămăligă",
+      "price": 55.0
+     },
+     {
+      "name": "1/2 pui prăjit cu sos de smântână, mujdei, mărar și cartofi copți",
+      "desc": "700 gr, 1/2 de pui prăjit îmbrăcat în sos de smântână cu mujdei și mărar, servit cu cartofi copți în coajă",
+      "price": 65.0
+     },
+     {
+      "name": "Pui Fajita",
+      "desc": "piept de pui dezosat, ardei gras, ciuperci, porumb, usturoi, paprika, mozzarella, sos de muștar cu maioneză, 350 gr",
+      "price": 50.0
+     }
+    ]
+   },
+   {
+    "category": "Garnituri",
+    "items": [
+     {
+      "name": "Cartofi prăjiți cu chilli",
+      "desc": "cartofi 150 gr, ceapă, usturoi, ulei, sweet chilly",
+      "price": 25.0
+     },
+     {
+      "name": "Cartofi prăjiți",
+      "desc": "200 gr cartofi prăjiți",
+      "price": 16.0
+     },
+     {
+      "name": "Cartofi gratinați",
+      "desc": "150 gr cartofi gratinați",
+      "price": 25.0
+     },
+     {
+      "name": "Cartofi țărănești",
+      "desc": "cartofi, bacon, ardei, ceapă, mărar, 150 gr",
+      "price": 25.0
+     },
+     {
+      "name": "Cartofi cu usturoi și parmezan",
+      "desc": "cartofi 250 gr, usturoi, parmezan, pătrunjel, ulei, sare, piper",
+      "price": 24.0
+     },
+     {
+      "name": "Cartofi Nepal",
+      "desc": "cartofi 250 gr, ulei, sare, piper, turmeric, garam masala, coriandru, chimen, pătrunjel, boia iute",
+      "price": 18.0
+     },
+     {
+      "name": "Piure de cartofi",
+      "desc": "150 gr piure de cartofi",
+      "price": 18.0
+     },
+     {
+      "name": "Cartofi natur",
+      "desc": "cartofi fierți, unt, pătrunjel, lămâie, 200 gr",
+      "price": 16.0
+     },
+     {
+      "name": "Cartofi copți în coajă",
+      "desc": "150 gr cartofi aurii copți în coajă la cuptor",
+      "price": 25.0
+     },
+     {
+      "name": "Legume la grătar",
+      "desc": "dovlecel, vânătă, ardei, roșie, ceapă, ciuperci, 300 gr",
+      "price": 25.0
+     },
+     {
+      "name": "Sparanghel grill",
+      "desc": "200 gr sparanghel, ulei, sare, piper",
+      "price": 20.0
+     },
+     {
+      "name": "Broccoli la plită",
+      "desc": "250 gr broccoli, unt, ulei, sare, piper",
+      "price": 20.0
+     },
+     {
+      "name": "Ciuperci la grătar",
+      "desc": "200 gr ciuperci",
+      "price": 22.0
+     },
+     {
+      "name": "Orez cu legume",
+      "desc": "200 gr orez cu legume",
+      "price": 25.0
+     },
+     {
+      "name": "Orez simplu",
+      "desc": "200 gr orez simplu",
+      "price": 18.0
+     },
+     {
+      "name": "Mămăligă",
+      "desc": "200 gr mămăligă",
+      "price": 12.0
+     },
+     {
+      "name": "Iahnie de fasole",
+      "desc": "300 gr fasole iahnie",
+      "price": 25.0
+     }
+    ]
+   },
+   {
+    "category": "Deserturi",
+    "items": [
+     {
+      "name": "★ Papanași cu dulceață și smântână",
+      "desc": "1 bucată, 150 gr brânză de vaci, 30 gr dulceată, 20 gr smântână",
+      "price": 22.0
+     },
+     {
+      "name": "Clătite milaneze",
+      "desc": "făină, ou, cremă de ciocolată, miez de nucă, înghețată, lapte, ulei, zahăr, 370 gr",
+      "price": 34.0
+     },
+     {
+      "name": "Clătite cu dulceată",
+      "desc": "1 bucată, dulceată de vișine / afine / fructe de pădure / căpșuni",
+      "price": 20.0
+     },
+     {
+      "name": "Clătite cu banană și ciocolată",
+      "desc": "1 bucată, banană, ciocolată",
+      "price": 22.0
+     },
+     {
+      "name": "Clătite cu ciocolată",
+      "desc": "1 bucată, ciocolată",
+      "price": 20.0
+     },
+     {
+      "name": "Înghețată Betty Ice",
+      "desc": "2 bucăți, 100 gr, sortimente: ciocolată, vanilie, malaga - rom cu stafide",
+      "price": 16.0
+     }
+    ]
+   },
+   {
+    "category": "Paste",
+    "items": [
+     {
+      "name": "Spaghetti / Penne Arabiata",
+      "desc": "spaghetti / penne, sos de roșii, ceapă, ulei, sare, piper, busuioc, parmezan, 350 gr",
+      "price": 45.0
+     },
+     {
+      "name": "Spaghete bologneze",
+      "desc": "spaghetti / penne, carne tocată de vită, sos de roșii, usturoi, parmezan, 350 gr",
+      "price": 55.0
+     },
+     {
+      "name": "Penne bologneze",
+      "desc": "spaghetti / penne, carne tocată de vită, sos de roșii, usturoi, parmezan, 350 gr",
+      "price": 55.0
+     },
+     {
+      "name": "Spaghete carbonara",
+      "desc": "spaghetti / penne, bacon, smântână, ou, parmezan, 350 gr",
+      "price": 50.0
+     },
+     {
+      "name": "Penne carbonara",
+      "desc": "spaghetti / penne, bacon, smântână, ou, parmezan, 350 gr",
+      "price": 50.0
+     },
+     {
+      "name": "Spaghete vegetariene",
+      "desc": "spaghetti / penne, ceapă, ardei gras, roșie, dovlecel, vinete, ciuperci, condimente, 350 gr",
+      "price": 45.0
+     },
+     {
+      "name": "Penne vegetariene",
+      "desc": "spaghetti / penne, ceapă, ardei gras, roșie, dovlecel, vinete, ciuperci, condimente, 350 gr",
+      "price": 45.0
+     }
+    ]
+   },
+   {
+    "category": "Cocktailuri",
+    "items": [
+     {
+      "name": "Cuba Libre",
+      "desc": "rom 50 ml, pepsi, gheață, lime",
+      "price": 35.0
+     },
+     {
+      "name": "Campari Orange",
+      "desc": "campari 50 ml, nectar de portocale, gheață, portocală",
+      "price": 35.0
+     },
+     {
+      "name": "Gin Tonic",
+      "desc": "gin 50 ml, evervess, gheață, lămâie",
+      "price": 35.0
+     },
+     {
+      "name": "Aperol Spritz Clasic",
+      "desc": "aperol 50 ml, prosecco 75 ml, apă minerală, gheață, portocală",
+      "price": 35.0
+     },
+     {
+      "name": "Aperol Spritz Tonic",
+      "desc": "aperol 50 ml, prosecco 75 ml, apă tonică 25 ml, gin 30 ml, gheață, portocală",
+      "price": 40.0
+     },
+     {
+      "name": "Miss Cosmo",
+      "desc": "vodka 50 ml, suc de fructe la alegere, lămâie",
+      "price": 35.0
+     },
+     {
+      "name": "Mohito",
+      "desc": "bacardi 50 ml, mentă, lămâie, apă minerală, gheață zdrobită",
+      "price": 40.0
+     },
+     {
+      "name": "Hugo",
+      "desc": "frunze de mentă, sirop flori de soc 15 ml, prosecco 120 ml, sifon 60 ml, gheață, 1 felie de lime",
+      "price": 35.0
+     },
+     {
+      "name": "White Russian",
+      "desc": "vodka 35 ml, lichior cafea 25 ml, smântână 15 ml, lapte 15 ml, pudră de ciocolată, boabe de cafea, gheață",
+      "price": 35.0
+     },
+     {
+      "name": "Pina Colada",
+      "desc": "rom alb 50 ml, cremă nucă de cocos 30 ml, suc proaspăt de ananas 50 ml, gheață, felie de ananas",
+      "price": 40.0
+     },
+     {
+      "name": "Put a Ring on It",
+      "desc": "rom alb 25 ml, spiced rum 25 ml, lămâie, suc fructe tropicale, grenadine, candy ring",
+      "price": 40.0
+     },
+     {
+      "name": "Vesper Martini",
+      "desc": "dry gin 25 ml, vodcă 35 ml, vermut sec 10 ml, coajă de lămâie, gheață, 3 măsline verzi",
+      "price": 40.0
+     },
+     {
+      "name": "Long Island Iced Tea",
+      "desc": "vodcă 15 ml, gin 15 ml, tequila 15 ml, rom alb 15 ml, triple sec 15 ml, sirop gomme 30 ml, suc de lămâie 25 ml, strop de cola",
+      "price": 45.0
+     },
+     {
+      "name": "Virgin Mohito",
+      "desc": "mentă, lămâie, suc de lămâie, zahăr, gheață, 7up și soda",
+      "price": 30.0
+     },
+     {
+      "name": "Roodies Colada",
+      "desc": "sirop căpșuni, suc de lămâie și portocale, gheață",
+      "price": 30.0
+     },
+     {
+      "name": "Frozen Mix Berry",
+      "desc": "sirop căpșuni, suc de lămâie, blue curacao, zahăr, gheață (timp preparare 15 min.)",
+      "price": 30.0
+     },
+     {
+      "name": "Flavour Ice Tea",
+      "desc": "sirop lămâie, suc de lămâie, ceai negru, gheață",
+      "price": 30.0
+     },
+     {
+      "name": "Slush",
+      "desc": "sirop, apă, gheață zdrobită, 300 ml",
+      "price": 25.0
+     },
+     {
+      "name": "Banana Shake",
+      "desc": "banană, lapte, mix de alune, frișcă, gheață",
+      "price": 30.0
+     },
+     {
+      "name": "Chocolate Shake",
+      "desc": "ciocolată, lapte, smântână de gătit, frișcă, gheață, topping",
+      "price": 30.0
+     },
+     {
+      "name": "Oreo Shake",
+      "desc": "biscuiți Oreo, lapte, smântână de gătit, frișcă, gheață, topping",
+      "price": 30.0
+     },
+     {
+      "name": "Iced Coffee",
+      "desc": "cafea, gheață, înghețată",
+      "price": 35.0
+     }
+    ]
+   },
+   {
+    "category": "Cafea & ceai",
+    "items": [
+     {
+      "name": "Lavazza",
+      "desc": "espresso lung sau scurt Lavazza",
+      "price": 12.0
+     },
+     {
+      "name": "Lavazza Decofeinizată",
+      "desc": "espresso decofeinizat Lavazza",
+      "price": 14.0
+     },
+     {
+      "name": "Cappuccino",
+      "desc": "cappuccino clasic cu lapte spumat, 150 ml",
+      "price": 18.0
+     },
+     {
+      "name": "Cappuccino Decofeinizat",
+      "desc": "cappuccino decofeinizat cu lapte spumat, 150 ml",
+      "price": 20.0
+     },
+     {
+      "name": "Cafe Latte",
+      "desc": "cafe latte cremos, 200 ml",
+      "price": 18.0
+     },
+     {
+      "name": "Cafe Latte Decofeinizat",
+      "desc": "cafe latte decofeinizat, 200 ml",
+      "price": 20.0
+     },
+     {
+      "name": "Cafe Latte Caramel / Ciocolată",
+      "desc": "cafe latte cu sirop de caramel sau ciocolată, 200 ml",
+      "price": 24.0
+     },
+     {
+      "name": "Frappe Simplu",
+      "desc": "cafea, gheață, înghețată, 250 ml",
+      "price": 20.0
+     },
+     {
+      "name": "Frappe Caramel / Ciocolată",
+      "desc": "frappe cu sirop de caramel sau ciocolată, 250 ml",
+      "price": 24.0
+     },
+     {
+      "name": "Ciocolată Caldă",
+      "desc": "ciocolată caldă neagră / albă, 150 ml",
+      "price": 22.0
+     },
+     {
+      "name": "Ceai",
+      "desc": "ceai la plic — fructe de pădure, lămâie, verde sau negru",
+      "price": 15.0
+     },
+     {
+      "name": "Lapte cald",
+      "desc": "lapte cald, 300 ml",
+      "price": 10.0
+     }
+    ]
+   },
+   {
+    "category": "Bere",
+    "items": [
+     {
+      "name": "Heineken halba 0.40l",
+      "desc": "Heineken la draft, 400 ml",
+      "price": 15.0
+     },
+     {
+      "name": "Heineken halba 1 litru",
+      "desc": "Heineken la draft, 1 litru",
+      "price": 38.0
+     },
+     {
+      "name": "Heineken la metru",
+      "desc": "Heineken la draft, 2.750 litri — 10+1 pahare gratuite 250 ml",
+      "price": 103.0
+     },
+     {
+      "name": "Amstel halba 0.40l",
+      "desc": "Amstel la draft, 400 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Amstel halba 1 litru",
+      "desc": "Amstel la draft, 1 litru",
+      "price": 25.0
+     },
+     {
+      "name": "Amstel la metru",
+      "desc": "Amstel la draft, 2.750 litri — 10+1 pahare gratuite 250 ml",
+      "price": 68.0
+     },
+     {
+      "name": "Heineken 0.33l",
+      "desc": "Heineken la sticlă, 330 ml",
+      "price": 13.0
+     },
+     {
+      "name": "Heineken 0.40l",
+      "desc": "Heineken la sticlă, 400 ml",
+      "price": 12.0
+     },
+     {
+      "name": "Desperados 0.40l",
+      "desc": "Desperados bere cu tequila, 400 ml",
+      "price": 15.0
+     },
+     {
+      "name": "Ciuc Premium 0.50l",
+      "desc": "Ciuc Premium, 500 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Birra Moretti Premium 0.50l",
+      "desc": "Birra Moretti Premium, 500 ml",
+      "price": 11.0
+     },
+     {
+      "name": "Amstel 0.33l",
+      "desc": "Amstel la sticlă, 330 ml",
+      "price": 12.0
+     },
+     {
+      "name": "Amstel 0.50l",
+      "desc": "Amstel la sticlă, 500 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Heineken Zero 0.33l",
+      "desc": "Heineken fără alcool, 330 ml",
+      "price": 15.0
+     },
+     {
+      "name": "Ciuc Radler Lemon Zero 0.5l",
+      "desc": "Ciuc Radler Lemon fără alcool, 500 ml",
+      "price": 14.0
+     },
+     {
+      "name": "Ciuc Radler Raspberry Zero 0.5l",
+      "desc": "Ciuc Radler Raspberry fără alcool, 500 ml",
+      "price": 14.0
+     },
+     {
+      "name": "Strongbow 0.33l",
+      "desc": "cidru din mere Strongbow, 330 ml — sortimente: gold apple, pear, red berries, elderflower",
+      "price": 15.0
+     },
+     {
+      "name": "Silva Strong Dark 0.50l",
+      "desc": "bere neagră craft Silva Strong Dark, 500 ml",
+      "price": 15.0
+     }
+    ]
+   },
+   {
+    "category": "Răcoritoare",
+    "items": [
+     {
+      "name": "Apă 0.50l",
+      "desc": "apă minerală sau plată, 500 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Apă 0.75l",
+      "desc": "apă minerală sau plată, 750 ml",
+      "price": 15.0
+     },
+     {
+      "name": "Pepsi 0.25l",
+      "desc": "Pepsi — normal, twist lemon sau light, 250 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Pepsi 0.33l doză",
+      "desc": "Pepsi la doză, 330 ml",
+      "price": 12.0
+     },
+     {
+      "name": "Mirinda 0.25l",
+      "desc": "Mirinda portocale, 250 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Mirinda 0.33l doză",
+      "desc": "Mirinda la doză, 330 ml",
+      "price": 12.0
+     },
+     {
+      "name": "7up 0.25l",
+      "desc": "7up, 250 ml",
+      "price": 10.0
+     },
+     {
+      "name": "7up 0.33l doză",
+      "desc": "7up la doză, 330 ml",
+      "price": 12.0
+     },
+     {
+      "name": "Evervess Tonic 0.25l",
+      "desc": "Evervess Tonic, 250 ml",
+      "price": 10.0
+     },
+     {
+      "name": "Lipton 0.33l",
+      "desc": "Lipton Ice Tea la doză, 330 ml — lămâie sau piersică",
+      "price": 12.0
+     },
+     {
+      "name": "Prigat Still Activ 0.25l",
+      "desc": "Prigat Still Activ, 250 ml — portocale, piersică, vișine, banane, căpșuni",
+      "price": 12.0
+     },
+     {
+      "name": "Limonadă simplă",
+      "desc": "lămâie naturală, 400 ml",
+      "price": 18.0
+     },
+     {
+      "name": "Limonadă",
+      "desc": "lămâie naturală cu aromă de fructe — zmeură, măr verde, fructul pasiunii, mango, kiwi, pere, cireșe, banane, blueberry, 400 ml",
+      "price": 22.0
+     },
+     {
+      "name": "Fresh portocale",
+      "desc": "suc proaspăt de portocale, 250 ml",
+      "price": 22.0
+     }
+    ]
+   }
+  ],
+  "menuSource": "https://restaurant-maria-rosiori.ro",
+  "hoursVerified": false
+ },
+ {
+  "id": "pizza-rosiori",
+  "name": "Pizza Roșiori",
+  "type": "pizzerie",
+  "cuisine": "Pizza, gelato",
+  "description": "Pizzerie locală cu livrare și comandă online; pizza medie de la 20 lei.",
+  "address": "Bd. Mărășești nr. 52",
+  "lat": 44.1108,
+  "lng": 24.9964,
+  "phone": null,
+  "website": "https://pizzarosiori.ro",
+  "hours": {
+   "default": "10:00-23:00"
+  },
+  "capacity": 30,
+  "priceLevel": 1,
+  "features": [
+   "Livrare",
+   "Comandă online",
+   "Gelato"
+  ],
+  "reservable": true,
+  "menu": [
+   {
+    "category": "Pizza",
+    "items": [
+     {
+      "name": "Pizza Vegetariana",
+      "price": 20.0
+     },
+     {
+      "name": "Pizza de Post",
+      "price": 20.0
+     },
+     {
+      "name": "Pizza Capriciosa",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Diavola",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Hawaiana",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Margherita",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Prosciutto E Funghi",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Rosiori",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Rustica",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Salami",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Taraneasca",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza de POST MEDIE 25 lei",
+      "price": 25.0
+     },
+     {
+      "name": "Pizza Pollo",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Quattro Formaggi",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Quattro Stagioni",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Sorpresa",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Tonno",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Tonno E Cippola",
+      "price": 26.0
+     },
+     {
+      "name": "Pizza Pollo Cherry",
+      "price": 27.0
+     },
+     {
+      "name": "Prosciutto Medie 30Lei",
+      "price": 30.0
+     },
+     {
+      "name": "Q.Formaggi Medie",
+      "price": 30.0
+     },
+     {
+      "name": "Tonno E Cipolla de Post MEDIE 30 lei",
+      "price": 30.0
+     }
+    ]
+   },
+   {
+    "category": "Gelato",
+    "items": [
+     {
+      "name": "Vascheta Gelato Gigant(3-4 Gusturi, 1Kg)",
+      "price": 120.0
+     },
+     {
+      "name": "Vascheta Gelato Mare(2-3 Gusturi, 750G)",
+      "price": 90.0
+     },
+     {
+      "name": "Vascheta Gelato Medie(2-3 Gusturi, 500G)",
+      "price": 60.0
+     },
+     {
+      "name": "Vascheta Gelato Mica(2 Gusturi, 350G)",
+      "price": 42.0
+     }
+    ]
+   },
+   {
+    "category": "Băuturi",
+    "items": [
+     {
+      "name": "Cafea nescafe",
+      "price": 2.0
+     },
+     {
+      "name": "Cafea alfreo",
+      "price": 3.0
+     },
+     {
+      "name": "Limonada",
+      "price": 7.5
+     },
+     {
+      "name": "Prigat Piersica",
+      "price": 7.5
+     },
+     {
+      "name": "Prigat Portocale",
+      "price": 7.5
+     },
+     {
+      "name": "Apa Plata 0.5L",
+      "price": 5.0
+     },
+     {
+      "name": "Pepsi Doza",
+      "price": 7.5
+     },
+     {
+      "name": "Mirinda Doza",
+      "price": 7.5
+     },
+     {
+      "name": "7up Doza",
+      "price": 7.5
+     }
+    ]
+   },
+   {
+    "category": "Sosuri",
+    "items": [
+     {
+      "name": "Ketchup Pikant sosiera",
+      "price": 3.0
+     },
+     {
+      "name": "Ketchup Dulce Sosiera",
+      "price": 3.0
+     },
+     {
+      "name": "Sos Cremos",
+      "price": 5.0
+     },
+     {
+      "name": "Sos De Usturoi",
+      "price": 5.0
+     },
+     {
+      "name": "Sos de rosii pikant",
+      "price": 4.0
+     },
+     {
+      "name": "Sos De Rosii",
+      "price": 4.0
+     },
+     {
+      "name": "Ketchup Pikant plic",
+      "price": 3.0
+     },
+     {
+      "name": "Ketchup Dulce plic",
+      "price": 3.0
+     }
+    ]
+   }
+  ],
+  "menuSource": "https://pizzarosiori.ro",
+  "hoursVerified": false
+ },
+ {
+  "id": "entourage-club",
+  "name": "Entourage Club",
+  "type": "restaurant",
+  "cuisine": "Europeană, regională",
+  "description": "Restaurant și club cu terasă în Grădina Publică, potrivit pentru evenimente.",
+  "address": "Str. Oltului nr. 6 (Grădina Publică)",
+  "lat": 44.11435,
+  "lng": 24.98675,
+  "phone": "0730 533 733",
+  "website": null,
+  "hours": {
+   "default": "10:00-24:00",
+   "sat": "10:00-02:00"
+  },
+  "capacity": 120,
+  "priceLevel": 2,
+  "features": [
+   "Terasă",
+   "Evenimente",
+   "Fresh"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "mon-jardin",
+  "name": "Mon Jardin",
+  "type": "restaurant",
+  "cuisine": "Franceză, europeană",
+  "description": "Restaurant elegant în Grădina Publică, cu specific franțuzesc.",
+  "address": "Aleea Grădina Publică",
+  "lat": 44.11397,
+  "lng": 24.98749,
+  "phone": "0730 533 733",
+  "website": null,
+  "hours": {
+   "default": "11:00-23:00"
+  },
+  "capacity": 60,
+  "priceLevel": 3,
+  "features": [
+   "Grădină",
+   "Evenimente"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "kola-club",
+  "name": "Kola Club",
+  "type": "restaurant",
+  "cuisine": "Regională, pizza",
+  "description": "Restaurant cu preparate românești și pizza, în centrul orașului.",
+  "address": "Str. Republicii",
+  "lat": 44.11136,
+  "lng": 24.98653,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "10:00-24:00"
+  },
+  "capacity": 70,
+  "priceLevel": 2,
+  "features": [
+   "Pizza",
+   "Centru"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "quadry-aquaventura",
+  "name": "Quadry – Aquaventura",
+  "type": "restaurant",
+  "cuisine": "Regională",
+  "description": "Restaurant în complexul Aquaventura din Parcul Nord, ideal pentru familii.",
+  "address": "Aleea Parc Nord",
+  "lat": 44.12039,
+  "lng": 24.97676,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "10:00-22:00"
+  },
+  "capacity": 100,
+  "priceLevel": 2,
+  "features": [
+   "Parc",
+   "Familii",
+   "Terasă"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "hotel-continental",
+  "name": "Restaurant Hotel Continental",
+  "type": "restaurant",
+  "cuisine": "Europeană",
+  "description": "Restaurantul hotelului Continental, cu terasă și bucătărie europeană.",
+  "address": "Str. Mărăști nr. 10A",
+  "lat": 44.11344,
+  "lng": 24.99157,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "07:00-23:00"
+  },
+  "capacity": 60,
+  "priceLevel": 2,
+  "features": [
+   "Hotel",
+   "Terasă",
+   "Mic dejun"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "pizza-bobo",
+  "name": "Pizza Bobo",
+  "type": "pizzerie",
+  "cuisine": "Pizza, fast-food",
+  "description": "Pizzerie deschisă non-stop în centru.",
+  "address": "Str. Mihail Kogălniceanu nr. 4",
+  "lat": 44.11225,
+  "lng": 24.99415,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "00:00-24:00"
+  },
+  "capacity": 25,
+  "priceLevel": 1,
+  "features": [
+   "Non-stop",
+   "La pachet"
+  ],
+  "reservable": true,
+  "hoursVerified": true
+ },
+ {
+  "id": "terasa-dunarii",
+  "name": "Terasa Dunării (La Gabie)",
+  "type": "restaurant",
+  "cuisine": "Românească, grătar",
+  "description": "Terasă cu preparate la grătar și specific românesc.",
+  "address": "Str. Dunării",
+  "lat": 44.08865,
+  "lng": 25.0048,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "11:00-23:00"
+  },
+  "capacity": 80,
+  "priceLevel": 1,
+  "features": [
+   "Terasă",
+   "Grătar"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "city-doner-rahovei",
+  "name": "City Doner – Rahovei",
+  "type": "fastfood",
+  "cuisine": "Döner, aripioare",
+  "description": "Fast-food cu döner, shaorma și aripioare.",
+  "address": "Str. Rahovei",
+  "lat": 44.11164,
+  "lng": 24.993,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "09:00-22:00",
+   "sat": "10:00-22:00",
+   "sun": "10:00-22:00"
+  },
+  "hoursVerified": true,
+  "capacity": 20,
+  "priceLevel": 1,
+  "features": [
+   "La pachet"
+  ],
+  "reservable": true
+ },
+ {
+  "id": "city-doner-carpati",
+  "name": "City Doner – Carpați",
+  "type": "fastfood",
+  "cuisine": "Döner, shaorma",
+  "description": "Fast-food în zona de nord a orașului.",
+  "address": "Str. Carpați",
+  "lat": 44.12181,
+  "lng": 24.98504,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "10:00-23:00"
+  },
+  "capacity": 16,
+  "priceLevel": 1,
+  "features": [
+   "La pachet"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ },
+ {
+  "id": "bunutzu",
+  "name": "Bunutzu",
+  "type": "fastfood",
+  "cuisine": "Burgeri, panini",
+  "description": "Burgeri și panini, seara până la miezul nopții.",
+  "address": "Bd. Mărășești",
+  "lat": 44.11118,
+  "lng": 24.99498,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "18:00-24:00",
+   "sun": "closed"
+  },
+  "hoursVerified": true,
+  "capacity": 20,
+  "priceLevel": 1,
+  "features": [
+   "Seara",
+   "La pachet"
+  ],
+  "reservable": true
+ },
+ {
+  "id": "simigeria-matei",
+  "name": "Simigeria Matei",
+  "type": "patiserie",
+  "cuisine": "Patiserie, pizza",
+  "description": "Simigerie și patiserie cu produse proaspete zilnic.",
+  "address": "Str. Rahovei",
+  "lat": 44.11185,
+  "lng": 24.99215,
+  "phone": "0755 935 169",
+  "website": "https://simigeria-matei.ro",
+  "hours": {
+   "default": "09:00-18:00",
+   "sat": "closed",
+   "sun": "closed"
+  },
+  "hoursVerified": true,
+  "capacity": 12,
+  "priceLevel": 1,
+  "features": [
+   "Patiserie",
+   "La pachet"
+  ],
+  "reservable": false
+ },
+ {
+  "id": "gogoserie",
+  "name": "Gogoșerie",
+  "type": "patiserie",
+  "cuisine": "Gogoși",
+  "description": "Gogoși calde, dulci și sărate.",
+  "address": "Str. Mihail Kogălniceanu",
+  "lat": 44.11151,
+  "lng": 24.9944,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "08:00-20:00"
+  },
+  "capacity": 8,
+  "priceLevel": 1,
+  "features": [
+   "La pachet"
+  ],
+  "reservable": false,
+  "hoursVerified": false
+ },
+ {
+  "id": "bar-angel",
+  "name": "Bar Angel",
+  "type": "bar",
+  "cuisine": "Bar, cafea",
+  "description": "Bar și cafenea pe strada Oltului.",
+  "address": "Str. Oltului",
+  "lat": 44.11229,
+  "lng": 24.9898,
+  "phone": null,
+  "website": null,
+  "hours": {
+   "default": "08:00-24:00"
+  },
+  "capacity": 40,
+  "priceLevel": 1,
+  "features": [
+   "Cafea",
+   "Băuturi"
+  ],
+  "reservable": true,
+  "hoursVerified": false
+ }
+]
