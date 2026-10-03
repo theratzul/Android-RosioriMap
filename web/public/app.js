@@ -101,9 +101,61 @@
   const fmtDate = (iso) => new Date(iso + 'T12:00:00').toLocaleDateString('ro-RO', { weekday: 'short', day: 'numeric', month: 'short' });
   const localISO = (d = new Date()) => new Date(d.getTime() - d.getTimezoneOffset() * 60000).toISOString().slice(0, 10);
 
-  /* ---------------- Map ---------------- */
+  /* ---------------- Native Android bridge & helpers ---------------- */
+  const bridge = {
+    isAndroid: () => typeof window.Android !== 'undefined',
+    toast: (msg) => {
+      if (window.Android?.toast) { window.Android.toast(msg); }
+      else { toast(msg); }
+    },
+    share: async (title, text, url) => {
+      if (window.Android?.share) { window.Android.share(title, text, url); return; }
+      if (navigator.share) {
+        try { await navigator.share({ title, text, url }); return; } catch {}
+      }
+      if (navigator.clipboard?.writeText) {
+        navigator.clipboard.writeText(url);
+        toast('Link copiat în clipboard! 📋');
+      } else {
+        toast(url);
+      }
+    },
+    dial: (phone) => {
+      if (!phone) return;
+      if (window.Android?.dial) { window.Android.dial(phone); }
+      else { location.href = 'tel:' + phone.replace(/[^\d+]/g, ''); }
+    },
+    navigate: (lat, lng, label) => {
+      if (window.Android?.openMapNavigation) { window.Android.openMapNavigation(lat, lng, label); }
+      else { window.open(`https://www.google.com/maps/dir/?api=1&destination=${lat},${lng}`, '_blank', 'noopener'); }
+    }
+  };
+
+  /* ---------------- Map (Keyless OpenStreetMap by default) ---------------- */
+  let currentTileLayer = null;
+  function applyTileLayer() {
+    if (currentTileLayer) { map.removeLayer(currentTileLayer); }
+    const providerKey = store.get('mapProvider', 'osm');
+    const providers = CFG.tileProviders || {};
+    let url, attr, maxZoom = 19, subdomains = 'abc';
+
+    if (providerKey === 'custom') {
+      url = store.get('customTileUrl', '') || CFG.tileUrl;
+      attr = 'Custom Map Tiles';
+    } else if (providers[providerKey]) {
+      url = providers[providerKey].url;
+      attr = providers[providerKey].attr;
+      maxZoom = providers[providerKey].maxZoom || 19;
+    } else {
+      url = CFG.tileUrl || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
+      attr = CFG.tileAttribution || '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+    }
+
+    currentTileLayer = L.tileLayer(url, { maxZoom, subdomains, attribution: attr }).addTo(map);
+  }
+
   const map = L.map('map', { zoomControl: false, attributionControl: true }).setView(CFG.center, CFG.zoom);
-  L.tileLayer(CFG.tileUrl, { maxZoom: 19, subdomains: 'abcd', attribution: CFG.tileAttribution }).addTo(map);
+  applyTileLayer();
 
   function pinIcon(r, active) {
     return L.divIcon({ className: '', iconSize: [40, 40], iconAnchor: [20, 40], html: `<div class="pin${active ? ' active' : ''}"><span>${EMOJI[r.type] || '🍽️'}</span></div>` });
@@ -161,7 +213,7 @@
     renderMarkers(list);
   }
 
-  /* ---------------- Drawer (restaurant details) ---------------- */
+  /* ---------------- Drawer (restaurant details & menu) ---------------- */
   function openRestaurant(id) {
     const r = state.restaurants.find((x) => x.id === id); if (!r) return;
     state.activeId = id; setActiveMarker(id);
@@ -172,9 +224,14 @@
       const h = (r.hours && (r.hours[d] || r.hours.default)) || '—';
       return `<span class="${d === today ? 'today' : ''}">${DAY_RO[d]}</span><span class="${d === today ? 'today' : ''}">${h === 'closed' ? 'Închis' : h === '00:00-24:00' ? 'Non-stop' : h}</span>`;
     }).join('');
+    const totalMenuItems = (r.menu || []).reduce((s, c) => s + c.items.length, 0);
     const menuHtml = r.menu?.length ? `
-      <section class="section"><h3>Meniu</h3>
-        <div class="menu-tabs" id="menu-tabs">${r.menu.map((c, i) => `<button class="menu-tab${i === 0 ? ' active' : ''}" data-cat="${i}">${esc(c.category)}</button>`).join('')}</div>
+      <section class="section">
+        <h3>Meniu (${totalMenuItems} preparate)</h3>
+        <div class="menu-search-wrap">
+          <input type="search" class="menu-search-input" id="menu-search" placeholder="Caută preparat în meniu..." autocomplete="off" />
+        </div>
+        <div class="menu-tabs" id="menu-tabs">${r.menu.map((c, i) => `<button class="menu-tab${i === 0 ? ' active' : ''}" data-cat="${i}">${esc(c.category)} (${c.items.length})</button>`).join('')}</div>
         <div id="menu-items"></div>
         ${r.menuSource ? `<p class="note">Sursa meniului: <a href="${esc(r.menuSource)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(r.menuSource.replace(/^https?:\/\//, ''))}</a>. Prețurile pot varia.</p>` : ''}
       </section>` : `<section class="section"><h3>Meniu</h3><p class="note">Meniul nu este încă disponibil online. Sună la local pentru oferta zilei.</p></section>`;
@@ -188,29 +245,72 @@
       </header>
       <div class="actions">
         <button class="btn primary" id="btn-reserve" ${r.reservable ? '' : 'disabled'}>${r.reservable ? '📅 Rezervă o masă' : 'Fără rezervări (doar la tejghea / livrare)'}</button>
-        ${r.phone ? `<a class="btn" id="btn-call" href="tel:${esc(r.phone.replace(/\s/g, ''))}">📞 Sună</a>` : ''}
-        <a class="btn" id="btn-directions" href="https://www.google.com/maps/dir/?api=1&destination=${r.lat},${r.lng}" target="_blank" rel="noopener">🧭 Traseu</a>
+        ${r.phone ? `<button class="btn" id="btn-call" type="button">📞 Sună</button>` : ''}
+        <button class="btn" id="btn-directions" type="button">🧭 Traseu</button>
+        <button class="btn" id="btn-share" type="button">🔗 Distribuie</button>
       </div>
-      <section class="section"><h3>Informații</h3>
+      <section class="section"><h3>Informații & Contact</h3>
         <div class="info-row">📍 <span>${esc(r.address)}, Roșiorii de Vede</span></div>
         ${r.phone ? `<div class="info-row">📞 <a href="tel:${esc(r.phone.replace(/\s/g, ''))}">${esc(r.phone)}</a></div>` : ''}
         ${r.website ? `<div class="info-row">🌐 <a href="${esc(r.website)}" target="_blank" rel="noopener">${esc(r.website.replace(/^https?:\/\//, ''))}</a></div>` : ''}
       </section>
-      <section class="section"><h3>Program</h3><div class="hours-grid">${hoursRows}</div></section>
+      <section class="section"><h3>Program de Funcționare</h3><div class="hours-grid">${hoursRows}</div></section>
       ${menuHtml}`;
 
+    // Action buttons
+    $('#btn-call')?.addEventListener('click', () => bridge.dial(r.phone));
+    $('#btn-directions')?.addEventListener('click', () => bridge.navigate(r.lat, r.lng, r.name));
+    $('#btn-share')?.addEventListener('click', () => bridge.share(
+      `${r.name} – Roșiori Map`,
+      `Vezi meniul și programul pentru ${r.name} din Roșiorii de Vede pe Roșiori Map!`,
+      location.origin + location.pathname + '#' + r.id
+    ));
+
     if (r.menu?.length) {
-      const renderCat = (i) => {
-        $('#menu-items').innerHTML = r.menu[i].items.map((it) => `
-          <div class="menu-item"><div><div class="name">${esc(it.name)}</div>${it.desc ? `<div class="desc">${esc(it.desc)}</div>` : ''}</div>
-          <div class="price">${it.price != null ? `${Number(it.price).toFixed(it.price % 1 ? 2 : 0)} lei` : ''}</div></div>`).join('');
+      let activeCatIdx = 0;
+      const renderItems = (items) => {
+        if (!items.length) {
+          $('#menu-items').innerHTML = `<p class="empty" style="padding:15px 0">Niciun preparat găsit.</p>`;
+          return;
+        }
+        $('#menu-items').innerHTML = items.map((it) => `
+          <div class="menu-item">
+            <div>
+              <div class="name">${esc(it.name)}</div>
+              ${it.desc ? `<div class="desc">${esc(it.desc)}</div>` : ''}
+            </div>
+            <div class="price">${it.price != null ? `${Number(it.price).toFixed(it.price % 1 ? 2 : 0)} lei` : ''}</div>
+          </div>`).join('');
       };
-      renderCat(0);
+
+      const updateMenuDisplay = () => {
+        const query = ($('#menu-search')?.value || '').trim().toLowerCase();
+        if (query) {
+          const matched = [];
+          r.menu.forEach((c) => {
+            c.items.forEach((it) => {
+              if (it.name.toLowerCase().includes(query) || (it.desc && it.desc.toLowerCase().includes(query))) {
+                matched.push(it);
+              }
+            });
+          });
+          renderItems(matched);
+        } else {
+          renderItems(r.menu[activeCatIdx]?.items || []);
+        }
+      };
+
+      renderItems(r.menu[0].items);
+
       $('#menu-tabs').addEventListener('click', (e) => {
         const b = e.target.closest('.menu-tab'); if (!b) return;
         document.querySelectorAll('.menu-tab').forEach((x) => x.classList.toggle('active', x === b));
-        renderCat(+b.dataset.cat);
+        activeCatIdx = +b.dataset.cat;
+        if ($('#menu-search')) $('#menu-search').value = '';
+        updateMenuDisplay();
       });
+
+      $('#menu-search')?.addEventListener('input', updateMenuDisplay);
     }
     $('#btn-reserve')?.addEventListener('click', () => openReservation(r));
     $('#drawer').classList.add('open'); $('#drawer').setAttribute('aria-hidden', 'false');
@@ -322,19 +422,68 @@
 
   /* ---------------- Settings ---------------- */
   function openSettings() {
-    openModal(`<h2>Setări</h2><p class="sub">Server pentru rezervări (lasă gol pentru serverul curent).</p>
+    const currentProvider = store.get('mapProvider', 'osm');
+    const customUrl = store.get('customTileUrl', '');
+    const api = store.get('apiBase', '') || '';
+
+    openModal(`<h2>Setări Aplicație</h2>
       <form id="set-form">
-        <div class="field"><label for="set-api">Adresă server API</label><input id="set-api" type="url" placeholder="https://rosiori-map.exemplu.ro" value="${esc(store.get('apiBase', '') || '')}" /></div>
-        <p class="note">Mod curent: <b>${isLocalMode() ? 'offline (rezervări locale)' : 'online – ' + esc(apiBase() || location.origin)}</b></p>
-        <button class="btn primary" type="submit" id="set-save" style="width:100%;margin-top:10px">Salvează</button>
+        <h3 style="font-size:1rem;margin:12px 0 6px">🗺️ Furnizor Hartă</h3>
+        <p class="sub" style="margin-bottom:8px">OpenStreetMap Standard funcționează gratuit fără cheie API.</p>
+        <div class="field">
+          <label for="set-map-provider">Stil Hartă</label>
+          <select id="set-map-provider">
+            <option value="osm" ${currentProvider === 'osm' ? 'selected' : ''}>OpenStreetMap Standard (Fără cheie API ✓)</option>
+            <option value="opentopo" ${currentProvider === 'opentopo' ? 'selected' : ''}>OpenTopoMap (Topografic / Relief)</option>
+            <option value="carto" ${currentProvider === 'carto' ? 'selected' : ''}>CARTO Voyager</option>
+            <option value="custom" ${currentProvider === 'custom' ? 'selected' : ''}>URL Personalizat (Tile Server)</option>
+          </select>
+        </div>
+        <div class="field" id="field-custom-url" style="${currentProvider === 'custom' ? '' : 'display:none'}">
+          <label for="set-custom-url">URL Șablon Tile (ex: https://{s}.tile.server/{z}/{x}/{y}.png)</label>
+          <input id="set-custom-url" type="url" placeholder="https://..." value="${esc(customUrl)}" />
+        </div>
+
+        <h3 style="font-size:1rem;margin:18px 0 6px">🌐 Server Sincronizare</h3>
+        <p class="sub" style="margin-bottom:8px">Pentru rezervări în rețea (lasă gol pentru serverul local/curent).</p>
+        <div class="field">
+          <label for="set-api">Adresă server API</label>
+          <input id="set-api" type="url" placeholder="https://rosiori-map.exemplu.ro" value="${esc(api)}" />
+        </div>
+        <p class="note">Mod curent: <b>${isLocalMode() ? 'offline (rezervări locale pe dispozitiv)' : 'online – ' + esc(apiBase() || location.origin)}</b></p>
+        
+        <button class="btn primary" type="submit" id="set-save" style="width:100%;margin-top:14px">Salvează Setările</button>
       </form>`);
+
+    const select = $('#set-map-provider');
+    const customField = $('#field-custom-url');
+    select.addEventListener('change', () => {
+      customField.style.display = select.value === 'custom' ? 'block' : 'none';
+    });
+
     $('#set-form').addEventListener('submit', async (e) => {
-      e.preventDefault(); const v = $('#set-api').value.trim();
+      e.preventDefault();
+      const v = $('#set-api').value.trim();
+      const prov = select.value;
+      const cUrl = $('#set-custom-url').value.trim();
+
+      store.set('mapProvider', prov);
+      if (prov === 'custom') { store.set('customTileUrl', cUrl); }
+      applyTileLayer();
+
       if (v) {
-        try { const r = await fetch(v.replace(/\/$/, '') + '/healthz'); if (!r.ok) throw 0; toast('Conectat la server ✓'); }
-        catch { toast('Serverul nu răspunde – salvat oricum', true); }
+        try {
+          const r = await fetch(v.replace(/\/$/, '') + '/healthz');
+          if (!r.ok) throw 0;
+          toast('Conectat la server ✓ Hartă actualizată!');
+        } catch {
+          toast('Serverul nu răspunde – salvat oricum', true);
+        }
+      } else {
+        toast('Setări salvate ✓ Hartă actualizată!');
       }
-      store.set('apiBase', v || null); closeModal();
+      store.set('apiBase', v || null);
+      closeModal();
     });
   }
 
@@ -378,6 +527,18 @@
     else setSheet(cur === 'expanded' ? 'mid' : 'collapsed');
   });
   $('#search').addEventListener('focus', () => { if (innerWidth <= 760) setSheet('expanded'); });
+
+  /* ---------------- Android & Back Navigation ---------------- */
+  window.handleBackPressed = () => {
+    if (modal.open) { closeModal(); return true; }
+    if ($('#drawer').classList.contains('open')) { closeDrawer(); return true; }
+    if (sheet.classList.contains('expanded')) { setSheet('mid'); return true; }
+    return false;
+  };
+  window.addEventListener('popstate', () => {
+    if (modal.open) closeModal();
+    else if ($('#drawer').classList.contains('open')) closeDrawer();
+  });
 
   /* ---------------- Boot ---------------- */
   (async () => {
