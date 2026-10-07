@@ -1,4 +1,8 @@
 <resources>
     <string name="app_name">Roșiori Map</string>
     <string name="location_permission_rationale">Roșiori Map are nevoie de permisiunea de localizare pentru a-ți arăta restaurantele apropiate pe hartă.</string>
+    <string name="app_author">Popa Bogdan (theratzul) - devops/linux admin/christian</string>
+    <string name="menu_about">Despre</string>
+    <string name="about_title">Despre Roșiori Map</string>
+    <string name="about_description">Roșiori Map – Ghidul tău culinar interactiv pentru restaurante și rezervări în Roșiorii de Vede.\n\nDezvoltator: Popa Bogdan (theratzul) - devops/linux admin/christian</string>
 </resources>

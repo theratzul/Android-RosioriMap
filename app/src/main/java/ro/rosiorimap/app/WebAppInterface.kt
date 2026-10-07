@@ -70,4 +70,18 @@ class WebAppInterface(private val activity: Activity) {
 
     @JavascriptInterface
     fun getAppVersion(): String = "1.0.0"
+
+    @JavascriptInterface
+    fun getAuthor(): String = "Popa Bogdan (theratzul) - devops/linux admin/christian"
+
+    @JavascriptInterface
+    fun showAbout() {
+        activity.runOnUiThread {
+            com.google.android.material.dialog.MaterialAlertDialogBuilder(activity)
+                .setTitle(R.string.about_title)
+                .setMessage(activity.getString(R.string.about_description))
+                .setPositiveButton(android.R.string.ok, null)
+                .show()
+        }
+    }
 }

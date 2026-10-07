@@ -5,29 +5,50 @@
     android:viewportWidth="108"
     android:viewportHeight="108">
     <group
-        android:scaleX="0.65"
-        android:scaleY="0.65"
-        android:translateX="18.9"
-        android:translateY="18.9">
-        <!-- Map Pin Body in Accent Gradient Gold/Orange -->
+        android:scaleX="0.78"
+        android:scaleY="0.78"
+        android:translateX="11.88"
+        android:translateY="11.88">
+        <!-- Outer Glowing Ring -->
         <path
-            android:fillColor="#f26b3a"
-            android:pathData="M54,12 C34.12,12 18,28.12 18,48 C18,72 54,96 54,96 C54,96 90,72 90,48 C90,28.12 73.88,12 54,12 Z" />
+            android:strokeColor="#e5c07b"
+            android:strokeWidth="1.6"
+            android:pathData="M54,10 A44,44 0 1 0 54,98 A44,44 0 1 0 54,10 Z" />
+        
+        <!-- Sacred Christian Cross (Left side) -->
+        <!-- Vertical Beam -->
         <path
-            android:fillColor="#f2b544"
-            android:pathData="M54,16 C36.33,16 22,30.33 22,48 C22,69 54,91 54,91 C54,91 86,69 86,48 C86,30.33 71.67,16 54,16 Z" />
-        <!-- Pin Inner Circle -->
+            android:fillColor="#fbbf24"
+            android:pathData="M34,22 L41,22 L41,78 L34,78 Z" />
+        <!-- Horizontal Beam -->
         <path
-            android:fillColor="#1a0b14"
-            android:pathData="M54,48m-22,0a22,22 0,1 1,44 0a22,22 0,1 1,-44 0" />
-        <!-- Fork & Knife Dining Icon -->
-        <!-- Fork -->
+            android:fillColor="#fbbf24"
+            android:pathData="M23,36 L52,36 L52,43 L23,43 Z" />
+        <!-- Cross Finial Highlights -->
         <path
-            android:fillColor="#fff8f0"
-            android:pathData="M46,38 L46,46 C46,48.21 47.79,50 50,50 L50,58 L48,58 L48,60 L54,60 L54,58 L52,58 L52,50 C54.21,50 56,48.21 56,46 L56,38 L54,38 L54,44 L53,44 L53,38 L51,38 L51,44 L49,44 L49,38 Z" />
-        <!-- Plate Glow -->
+            android:fillColor="#ffffff"
+            android:pathData="M35.5,23.5 L39.5,23.5 L39.5,76.5 L35.5,76.5 Z" />
         <path
-            android:fillColor="#f2b544"
-            android:pathData="M54,63 C49,63 45,61.5 45,60 C45,58.5 49,57 54,57 C59,57 63,58.5 63,60 C63,61.5 59,63 54,63 Z" />
+            android:fillColor="#ffffff"
+            android:pathData="M24.5,37.5 L50.5,37.5 L50.5,41.5 L24.5,41.5 Z" />
+
+        <!-- Letter R from Roșiori (Right side) -->
+        <!-- Vertical stem of R -->
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M58,22 L66,22 L66,78 L58,78 Z" />
+        <!-- Loop of R -->
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M66,22 L77,22 C83.6,22 89,27.4 89,34 C89,40.6 83.6,46 77,46 L66,46 Z M66,28 L76,28 C79.3,28 82,30.7 82,34 C82,37.3 79.3,40 76,40 L66,40 Z" />
+        <!-- Diagonal leg of R -->
+        <path
+            android:fillColor="#ffffff"
+            android:pathData="M72,44 L79,44 L89,78 L81,78 Z" />
+        
+        <!-- Connecting celestial star / gold accent -->
+        <path
+            android:fillColor="#fbbf24"
+            android:pathData="M54,50m-2.5,0a2.5,2.5 0 1 0 5,0a2.5,2.5 0 1 0 -5,0" />
     </group>
 </vector>

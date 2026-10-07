@@ -148,14 +148,33 @@
       maxZoom = providers[providerKey].maxZoom || 19;
     } else {
       url = CFG.tileUrl || 'https://tile.openstreetmap.org/{z}/{x}/{y}.png';
-      attr = CFG.tileAttribution || '&copy; <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors';
+      attr = '';
     }
 
-    currentTileLayer = L.tileLayer(url, { maxZoom, subdomains, attribution: attr }).addTo(map);
+    currentTileLayer = L.tileLayer(url, { maxZoom, subdomains, attribution: '' }).addTo(map);
   }
 
-  const map = L.map('map', { zoomControl: false, attributionControl: true }).setView(CFG.center, CFG.zoom);
+  const map = L.map('map', { zoomControl: false, attributionControl: false }).setView(CFG.center, CFG.zoom);
+  if (map.attributionControl) { map.attributionControl.remove(); }
   applyTileLayer();
+
+  // Emblem marker for Roșiori de Vede on map
+  const cityEmblem = L.marker(CFG.center, {
+    icon: L.divIcon({
+      className: 'city-center-marker',
+      iconSize: [40, 40],
+      iconAnchor: [20, 20],
+      html: `<div class="city-marker-pulse" title="Roșiori de Vede ☩">
+               <img src="icons/icon.svg" width="26" height="26" alt="Roșiori Map" />
+             </div>`
+    }),
+    zIndexOffset: -50
+  }).addTo(map);
+
+  cityEmblem.on('click', () => {
+    map.flyTo(CFG.center, 16);
+    toast('📍 Centrul Municipiului Roșiorii de Vede ☩');
+  });
 
   function pinIcon(r, active) {
     return L.divIcon({ className: '', iconSize: [40, 40], iconAnchor: [20, 40], html: `<div class="pin${active ? ' active' : ''}"><span>${EMOJI[r.type] || '🍽️'}</span></div>` });
@@ -425,16 +444,27 @@
     const currentProvider = store.get('mapProvider', 'osm');
     const customUrl = store.get('customTileUrl', '');
     const api = store.get('apiBase', '') || '';
+    const currentTheme = store.get('theme', 'heaven');
 
     openModal(`<h2>Setări Aplicație</h2>
       <form id="set-form">
-        <h3 style="font-size:1rem;margin:12px 0 6px">🗺️ Furnizor Hartă</h3>
-        <p class="sub" style="margin-bottom:8px">OpenStreetMap Standard funcționează gratuit fără cheie API.</p>
+        <h3 style="font-size:1rem;margin:12px 0 6px">✨ Temă Vizuală</h3>
+        <p class="sub" style="margin-bottom:8px">Alege stilul vizual al aplicației.</p>
+        <div class="field">
+          <label for="set-theme">Stil & Ambianță</label>
+          <select id="set-theme">
+            <option value="heaven" ${currentTheme === 'heaven' ? 'selected' : ''}>🕊️ Temă Cerească ✝ (Albastru divin, aur radiant, îngeri & cruci)</option>
+            <option value="dark" ${currentTheme === 'dark' ? 'selected' : ''}>🌑 Temă Clasic Dark (Bordeaux & Cărbune)</option>
+          </select>
+        </div>
+
+        <h3 style="font-size:1rem;margin:18px 0 6px">🗺️ Stil Hartă</h3>
+        <p class="sub" style="margin-bottom:8px">Harta standard funcționează gratuit fără cheie API.</p>
         <div class="field">
           <label for="set-map-provider">Stil Hartă</label>
           <select id="set-map-provider">
-            <option value="osm" ${currentProvider === 'osm' ? 'selected' : ''}>OpenStreetMap Standard (Fără cheie API ✓)</option>
-            <option value="opentopo" ${currentProvider === 'opentopo' ? 'selected' : ''}>OpenTopoMap (Topografic / Relief)</option>
+            <option value="osm" ${currentProvider === 'osm' ? 'selected' : ''}>Harta Standard (Fără cheie API ✓)</option>
+            <option value="opentopo" ${currentProvider === 'opentopo' ? 'selected' : ''}>Topografic (Relief)</option>
             <option value="carto" ${currentProvider === 'carto' ? 'selected' : ''}>CARTO Voyager</option>
             <option value="custom" ${currentProvider === 'custom' ? 'selected' : ''}>URL Personalizat (Tile Server)</option>
           </select>
@@ -452,7 +482,13 @@
         </div>
         <p class="note">Mod curent: <b>${isLocalMode() ? 'offline (rezervări locale pe dispozitiv)' : 'online – ' + esc(apiBase() || location.origin)}</b></p>
         
-        <button class="btn primary" type="submit" id="set-save" style="width:100%;margin-top:14px">Salvează Setările</button>
+        <div class="about-card" style="box-shadow: 0 0 16px -4px rgba(251, 191, 36, 0.25);">
+          <div class="about-card-badge">🕊️ Dezvoltator Aplicație</div>
+          <div class="about-card-title">Popa Bogdan (theratzul)</div>
+          <div class="about-card-sub">devops / linux admin / christian ✝</div>
+        </div>
+
+        <button class="btn primary" type="submit" id="set-save" style="width:100%;margin-top:14px">Salvează Setările ✝</button>
       </form>`);
 
     const select = $('#set-map-provider');
@@ -466,6 +502,9 @@
       const v = $('#set-api').value.trim();
       const prov = select.value;
       const cUrl = $('#set-custom-url').value.trim();
+      const chosenTheme = $('#set-theme').value;
+
+      applyTheme(chosenTheme);
 
       store.set('mapProvider', prov);
       if (prov === 'custom') { store.set('customTileUrl', cUrl); }
@@ -487,6 +526,150 @@
     });
   }
 
+  /* ---------------- Christian Heaven & Dark Theme ---------------- */
+  const applyTheme = (themeName) => {
+    const isHeaven = themeName === 'heaven';
+    document.documentElement.setAttribute('data-theme', isHeaven ? 'heaven' : 'dark');
+    document.body.classList.toggle('theme-heaven', isHeaven);
+    store.set('theme', themeName);
+  };
+
+  const toggleTheme = () => {
+    const cur = store.get('theme', 'heaven');
+    const next = cur === 'heaven' ? 'dark' : 'heaven';
+    applyTheme(next);
+    toast(next === 'heaven' ? '✦ Stil Celest Mistic activat ☩' : '🌑 Stil Clasic Dark activat');
+  };
+
+  /* ---------------- Mysterious & Elegant Sacred Application Menu ---------------- */
+  function openAppMenu() {
+    const isHeaven = store.get('theme', 'heaven') === 'heaven';
+    openModal(`
+      <div class="sacred-menu-modal">
+        <div class="sacred-emblem-wrap">
+          <div class="sacred-aureole"></div>
+          <!-- Seraphim & Crux Mystica Sacred Linework -->
+          <svg viewBox="0 0 64 64" width="56" height="56" fill="none" class="sacred-emblem">
+            <!-- Central Mystical Halo & Rays -->
+            <circle cx="32" cy="32" r="28" stroke="var(--accent)" stroke-width="0.8" stroke-dasharray="2 3" opacity="0.45"/>
+            <circle cx="32" cy="32" r="19" stroke="var(--accent)" stroke-width="0.9" opacity="0.7"/>
+            <circle cx="32" cy="32" r="7" fill="rgba(229,192,123,0.12)" stroke="var(--accent)" stroke-width="1.2"/>
+            
+            <!-- Seraphim Wings (6 delicate stylized angelic wings) -->
+            <!-- Upper Wings -->
+            <path d="M32 18 C25 8, 12 10, 8 18 C15 22, 24 22, 32 25" stroke="var(--accent)" stroke-width="1.3" opacity="0.9"/>
+            <path d="M32 18 C39 8, 52 10, 56 18 C49 22, 40 22, 32 25" stroke="var(--accent)" stroke-width="1.3" opacity="0.9"/>
+            <!-- Middle Wings -->
+            <path d="M26 32 C12 30, 4 38, 6 46 C15 45, 23 40, 27 34" stroke="var(--accent)" stroke-width="1.2" opacity="0.8"/>
+            <path d="M38 32 C52 30, 60 38, 58 46 C49 45, 41 40, 37 34" stroke="var(--accent)" stroke-width="1.2" opacity="0.8"/>
+            <!-- Lower Wings -->
+            <path d="M30 38 C22 46, 18 56, 26 58 C30 52, 31 46, 32 40" stroke="var(--accent)" stroke-width="1.1" opacity="0.75"/>
+            <path d="M34 38 C42 46, 46 56, 38 58 C34 52, 33 46, 32 40" stroke="var(--accent)" stroke-width="1.1" opacity="0.75"/>
+
+            <!-- Mystical Latin Cross at Core -->
+            <line x1="32" y1="11" x2="32" y2="53" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/>
+            <line x1="22" y1="23" x2="42" y2="23" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/>
+            <!-- Finials -->
+            <circle cx="32" cy="11" r="1.6" fill="var(--accent)"/>
+            <circle cx="32" cy="53" r="1.6" fill="var(--accent)"/>
+            <circle cx="22" cy="23" r="1.6" fill="var(--accent)"/>
+            <circle cx="42" cy="23" r="1.6" fill="var(--accent)"/>
+          </svg>
+        </div>
+
+        <h2 style="margin: 0 0 2px; font-size: 1.3rem; letter-spacing: 0.5px;">Menu</h2>
+        <p class="sub" style="margin: 0 0 16px; font-size: 0.78rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--accent); opacity: 0.9;">
+          Roșiori Map · ☩ Lux in Tenebris
+        </p>
+
+        <div class="sacred-menu-list">
+          <div class="sacred-menu-item" id="menu-item-reservations" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Rezervările Mele</div>
+              <div class="sacred-menu-item-sub">Vizualizează mesele rezervate și starea lor</div>
+            </div>
+          </div>
+
+          <div class="sacred-menu-item" id="menu-item-theme" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.5">
+                <circle cx="12" cy="12" r="9" stroke-dasharray="2 2"/>
+                <line x1="12" y1="6" x2="12" y2="18" stroke="var(--accent)" stroke-width="1.8"/>
+                <line x1="8" y1="10" x2="16" y2="10" stroke="var(--accent)" stroke-width="1.8"/>
+              </svg>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Stil Vizual: ${isHeaven ? 'Cerească (Seraphic Gold) ✦' : 'Clasic Dark 🌑'}</div>
+              <div class="sacred-menu-item-sub">Comută între tema cerească mistică și clasic</div>
+            </div>
+          </div>
+
+          <div class="sacred-menu-item" id="menu-item-settings" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19.4 13a7.6 7.6 0 0 0 0-2l2.1-1.6-2-3.5-2.5 1a7.3 7.3 0 0 0-1.7-1L15 3h-4l-.4 2.9a7.3 7.3 0 0 0-1.7 1l-2.5-1-2 3.5L6.6 11a7.6 7.6 0 0 0 0 2l-2.1 1.6 2 3.5 2.5-1a7.3 7.3 0 0 0 1.7 1L11 21h4l.4-2.9a7.3 7.3 0 0 0 1.7-1l2.5 1 2-3.5ZM13 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z" transform="translate(-1 0)"/></svg>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Setări & Hartă</div>
+              <div class="sacred-menu-item-sub">Stiluri de hartă și sincronizare server</div>
+            </div>
+          </div>
+
+          <div class="sacred-menu-item" id="menu-item-about" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <span style="font-size:1.15rem;color:var(--accent)">☩</span>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Popa Bogdan (theratzul)</div>
+              <div class="sacred-menu-item-sub">devops / linux admin / christian · Despre autor</div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn secondary" type="button" id="menu-close-btn" style="width: 100%; margin-top: 4px;">
+          Închide Meniul
+        </button>
+      </div>
+    `);
+
+    $('#menu-close-btn')?.addEventListener('click', closeModal);
+    $('#menu-item-reservations')?.addEventListener('click', () => { closeModal(); openMyReservations(); });
+    $('#menu-item-theme')?.addEventListener('click', () => { toggleTheme(); openAppMenu(); });
+    $('#menu-item-settings')?.addEventListener('click', () => { closeModal(); openSettings(); });
+    $('#menu-item-about')?.addEventListener('click', () => { closeModal(); openAbout(); });
+  }
+
+  /* ---------------- About / Informații ---------------- */
+  function openAbout() {
+    openModal(`
+      <div style="text-align: center; padding: 6px 2px 2px;">
+        <div style="font-size: 1.5rem; margin-bottom: 6px; color: var(--accent); opacity: 0.9;" title="Crux Mystica">
+          ☩
+        </div>
+        <img src="icons/icon.svg" alt="Roșiori Map Logo" style="width: 58px; height: 58px; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 0 20px 2px rgba(229, 192, 123, 0.4), 0 6px 18px -4px rgba(96, 165, 250, 0.5);" />
+        <h2 style="margin: 0 0 4px; font-size: 1.25rem;">Roșiori Map</h2>
+        <p class="sub" style="margin: 0 0 16px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: var(--accent);">Restaurante · Meniuri · Rezervări</p>
+
+        <div class="about-card" style="box-shadow: 0 0 18px -4px rgba(229, 192, 123, 0.25);">
+          <div class="about-card-badge">☩ Dezvoltator & Mentenanță</div>
+          <div class="about-card-title">Popa Bogdan (theratzul)</div>
+          <div class="about-card-sub">devops / linux admin / christian</div>
+        </div>
+
+        <p class="sub" style="margin: 14px 4px 16px; font-size: 0.82rem; line-height: 1.5;">
+          Ghidul tău culinar interactiv pentru orașul Roșiorii de Vede. Descoperă restaurante, consultă meniurile complete și rezervă mese online în câteva secunde.
+        </p>
+
+        <button class="btn primary" type="button" id="about-close-btn" style="width: 100%;">Închide</button>
+      </div>
+    `);
+
+    const closeBtn = $('#about-close-btn');
+    if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  }
+
   /* ---------------- Events ---------------- */
   $('#search').addEventListener('input', (e) => { state.query = e.target.value; renderList(); });
   $('#filters').addEventListener('click', (e) => {
@@ -497,7 +680,16 @@
   $('#drawer-close').addEventListener('click', closeDrawer);
   $('#drawer-backdrop').addEventListener('click', closeDrawer);
   $('#btn-my-res').addEventListener('click', openMyReservations);
-  $('#btn-settings').addEventListener('click', openSettings);
+  $('#btn-menu')?.addEventListener('click', openAppMenu);
+  $('#map-brand-badge')?.addEventListener('click', () => {
+    map.flyTo(CFG.center, 15);
+    toast('📍 Roșiorii de Vede · Hartă centrată ☩');
+  });
+  const sideFooter = $('#sidebar-footer');
+  if (sideFooter) {
+    sideFooter.addEventListener('click', openAppMenu);
+    sideFooter.addEventListener('keydown', (e) => { if (e.key === 'Enter') openAppMenu(); });
+  }
   document.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.open) closeDrawer(); });
 
   $('#btn-locate').addEventListener('click', () => {
@@ -541,6 +733,8 @@
   });
 
   /* ---------------- Boot ---------------- */
+  applyTheme(store.get('theme', 'heaven'));
+
   (async () => {
     try {
       state.restaurants = await api.restaurants();

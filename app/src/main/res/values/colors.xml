@@ -9,4 +9,8 @@
     <color name="text_secondary">#d2b8c8</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="heaven_primary">#fbbf24</color>
+    <color name="heaven_secondary">#38bdf8</color>
+    <color name="heaven_background">#070e1c</color>
+    <color name="heaven_surface">#102142</color>
 </resources>
