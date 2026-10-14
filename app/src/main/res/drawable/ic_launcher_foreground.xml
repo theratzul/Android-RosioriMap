@@ -4,51 +4,18 @@
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
-    <group
-        android:scaleX="0.78"
-        android:scaleY="0.78"
-        android:translateX="11.88"
-        android:translateY="11.88">
-        <!-- Outer Glowing Ring -->
-        <path
-            android:strokeColor="#e5c07b"
-            android:strokeWidth="1.6"
-            android:pathData="M54,10 A44,44 0 1 0 54,98 A44,44 0 1 0 54,10 Z" />
-        
-        <!-- Sacred Christian Cross (Left side) -->
-        <!-- Vertical Beam -->
-        <path
-            android:fillColor="#fbbf24"
-            android:pathData="M34,22 L41,22 L41,78 L34,78 Z" />
-        <!-- Horizontal Beam -->
-        <path
-            android:fillColor="#fbbf24"
-            android:pathData="M23,36 L52,36 L52,43 L23,43 Z" />
-        <!-- Cross Finial Highlights -->
-        <path
-            android:fillColor="#ffffff"
-            android:pathData="M35.5,23.5 L39.5,23.5 L39.5,76.5 L35.5,76.5 Z" />
-        <path
-            android:fillColor="#ffffff"
-            android:pathData="M24.5,37.5 L50.5,37.5 L50.5,41.5 L24.5,41.5 Z" />
-
-        <!-- Letter R from Roșiori (Right side) -->
-        <!-- Vertical stem of R -->
-        <path
-            android:fillColor="#ffffff"
-            android:pathData="M58,22 L66,22 L66,78 L58,78 Z" />
-        <!-- Loop of R -->
-        <path
-            android:fillColor="#ffffff"
-            android:pathData="M66,22 L77,22 C83.6,22 89,27.4 89,34 C89,40.6 83.6,46 77,46 L66,46 Z M66,28 L76,28 C79.3,28 82,30.7 82,34 C82,37.3 79.3,40 76,40 L66,40 Z" />
-        <!-- Diagonal leg of R -->
-        <path
-            android:fillColor="#ffffff"
-            android:pathData="M72,44 L79,44 L89,78 L81,78 Z" />
-        
-        <!-- Connecting celestial star / gold accent -->
-        <path
-            android:fillColor="#fbbf24"
-            android:pathData="M54,50m-2.5,0a2.5,2.5 0 1 0 5,0a2.5,2.5 0 1 0 -5,0" />
-    </group>
+    <!-- Centered Letter R -->
+    <!-- Vertical stem of R -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M34,29 L43,29 L43,79 L34,79 Z" />
+    <!-- Loop of R -->
+    <path
+        android:fillColor="#ffffff"
+        android:fillType="evenOdd"
+        android:pathData="M43,29 L59,29 C67.3,29 74,35 74,42.5 C74,50 67.3,56 59,56 L43,56 Z M43,38 L43,47 L57,47 C61.4,47 65,45 65,42.5 C65,40 61.4,38 57,38 Z" />
+    <!-- Diagonal leg of R -->
+    <path
+        android:fillColor="#ffffff"
+        android:pathData="M51,53 L61,53 L74,79 L63,79 Z" />
 </vector>

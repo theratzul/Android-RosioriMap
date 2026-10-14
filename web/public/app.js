@@ -165,7 +165,7 @@
       iconSize: [40, 40],
       iconAnchor: [20, 20],
       html: `<div class="city-marker-pulse" title="Roșiori de Vede ☩">
-               <img src="icons/icon.svg" width="26" height="26" alt="Roșiori Map" />
+               <img src="icons/icon.svg?v=2" width="26" height="26" alt="Roșiori Map" />
              </div>`
     }),
     zIndexOffset: -50
@@ -648,7 +648,7 @@
         <div style="font-size: 1.5rem; margin-bottom: 6px; color: var(--accent); opacity: 0.9;" title="Crux Mystica">
           ☩
         </div>
-        <img src="icons/icon.svg" alt="Roșiori Map Logo" style="width: 58px; height: 58px; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 0 20px 2px rgba(229, 192, 123, 0.4), 0 6px 18px -4px rgba(96, 165, 250, 0.5);" />
+        <img src="icons/icon.svg?v=2" alt="Roșiori Map Logo" style="width: 58px; height: 58px; border-radius: 14px; margin-bottom: 10px; box-shadow: 0 4px 18px -2px rgba(29, 78, 216, 0.5), 0 0 12px rgba(59, 130, 246, 0.35);" />
         <h2 style="margin: 0 0 4px; font-size: 1.25rem;">Roșiori Map</h2>
         <p class="sub" style="margin: 0 0 16px; font-size: 0.8rem; letter-spacing: 1px; text-transform: uppercase; color: var(--accent);">Restaurante · Meniuri · Rezervări</p>
 
