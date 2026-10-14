@@ -18,58 +18,240 @@
 </head>
 <body>
   <div class="heaven-rays" aria-hidden="true"></div>
-  <header class="topbar glass">
-    <div class="brand">
-      <img src="icons/icon.svg?v=2" alt="Roșiori Map Logo" class="brand-logo" width="40" height="40" />
-      <div>
-        <h1 class="brand-title">Roșiori Map</h1>
-        <p class="tagline">Restaurante · Meniuri · Rezervări</p>
+
+  <!-- ==================== 1. MAIN MENU VIEW ==================== -->
+  <section id="view-main-menu" class="main-menu-view">
+    <div class="menu-container">
+      <header class="menu-hero glass">
+        <div class="menu-hero-brand">
+          <div class="menu-logo-wrap">
+            <img src="icons/icon.svg?v=2" alt="Roșiori Map Logo" class="menu-logo-img" width="62" height="62" />
+          </div>
+          <div class="menu-hero-text">
+            <span class="menu-eyebrow">Municipiul Roșiorii de Vede</span>
+            <h1 class="menu-title">Roșiori City Portal</h1>
+            <p class="menu-subtitle">Explorează serviciile, restaurantele și punctele de interes ale orașului</p>
+          </div>
+        </div>
+        <div class="menu-hero-actions">
+          <button id="menu-btn-theme" class="chip" type="button" aria-label="Comută tema" title="Comută tema vizuală">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 3c-4.97 0-9 4.03-9 9s4.03 9 9 9 9-4.03 9-9c0-.46-.04-.92-.1-1.36-.98 1.37-2.58 2.26-4.4 2.26-3.03 0-5.5-2.47-5.5-5.5 0-1.82.89-3.42 2.26-4.4-.44-.06-.9-.1-1.36-.1z"/></svg>
+            <span id="theme-btn-label">Temă</span>
+          </button>
+          <button id="menu-btn-about" class="chip" type="button" aria-label="Despre aplicație" title="Informații & Autor">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+            <span>Despre</span>
+          </button>
+        </div>
+      </header>
+
+      <div class="menu-grid">
+        <!-- 1. Harta Rezervari (Restaurante) -->
+        <article class="menu-card" id="card-action-restaurants" role="button" tabindex="0">
+          <div class="card-glow card-glow-blue"></div>
+          <div class="card-icon-wrap bg-blue">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M11 9H9V2H7v7H5V2H3v7c0 2.12 1.66 3.84 3.75 3.97V22h2.5v-9.03C11.34 12.84 13 11.12 13 9V2h-2v7zm5-3v8h2.5v8H21V2c-2.76 0-5 2.24-5 4z"/>
+            </svg>
+          </div>
+          <div class="card-content">
+            <div class="card-header-row">
+              <h2 class="card-title">Harta Rezervări (Restaurante)</h2>
+              <span class="badge-pill badge-live">● Activ</span>
+            </div>
+            <p class="card-desc">Ghidul culinar complet: harta restaurantelor, pizzeriilor și cafenelelor din Roșiori, meniuri și rezervări online instantanee.</p>
+            <div class="card-footer-row">
+              <span class="card-action-hint">Deschide aplicația</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 2. Parcuri (Parks) -->
+        <article class="menu-card" id="card-action-parks" role="button" tabindex="0">
+          <div class="card-glow card-glow-emerald"></div>
+          <div class="card-icon-wrap bg-emerald">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M12 2C9.24 2 7 4.24 7 7c0 .64.12 1.25.35 1.82C5.4 9.55 4 11.61 4 14c0 3.31 2.69 6 6 6h1v2h2v-2h1c3.31 0 6-2.69 6-6 0-2.39-1.4-4.45-3.35-5.18.23-.57.35-1.18.35-1.82 0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3 0 .42-.09.82-.24 1.18l-.48 1.15 1.18.42C17.06 10.33 18 12.06 18 14c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4 0-1.94.94-3.67 2.54-4.25l1.18-.42-.48-1.15C9.09 7.82 9 7.42 9 7c0-1.66 1.34-3 3-3z"/>
+            </svg>
+          </div>
+          <div class="card-content">
+            <div class="card-header-row">
+              <h2 class="card-title">Parcuri & Zone Verzi</h2>
+              <span class="badge-pill badge-soon">În curând</span>
+            </div>
+            <p class="card-desc">Parcul Central, alei de promenadă, zone de relaxare în aer liber, foișoare și locuri de joacă pentru familii.</p>
+            <div class="card-footer-row">
+              <span class="card-action-hint">Detalii secțiune</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 3. Istorie (History) -->
+        <article class="menu-card" id="card-action-history" role="button" tabindex="0">
+          <div class="card-glow card-glow-amber"></div>
+          <div class="card-icon-wrap bg-amber">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M12 3L2 8v2h20V8L12 3zm-7 7v9h2v-9H5zm4 0v9h2v-9H9zm4 0v9h2v-9h-2zm4 0v9h2v-9h-2zm-13 11v2h18v-2H4z"/>
+            </svg>
+          </div>
+          <div class="card-content">
+            <div class="card-header-row">
+              <h2 class="card-title">Istorie & Patrimoniu</h2>
+              <span class="badge-pill badge-soon">În curând</span>
+            </div>
+            <p class="card-desc">Cronica istorică a orașului Roșiorii de Vede, atestări documentare din 1385, vestigii și personalități de seamă.</p>
+            <div class="card-footer-row">
+              <span class="card-action-hint">Detalii secțiune</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 4. Clădiri Culturale (Cultural Buildings) -->
+        <article class="menu-card" id="card-action-culture" role="button" tabindex="0">
+          <div class="card-glow card-glow-purple"></div>
+          <div class="card-icon-wrap bg-purple">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm0-4h-2V7h2v7zM4 12c0-4.41 3.59-8 8-8s8 3.59 8 8-3.59 8-8 8-8-3.59-8-8z"/>
+              <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-1.5V6a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3v4.5H4.5a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15zM8 6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v4.5H8V6zm-3.5 6.5h15a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-4.5a1 1 0 0 1 1-1z"/>
+            </svg>
+          </div>
+          <div class="card-content">
+            <div class="card-header-row">
+              <h2 class="card-title">Clădiri Culturale & Muzee</h2>
+              <span class="badge-pill badge-soon">În curând</span>
+            </div>
+            <p class="card-desc">Casa Municipală de Cultură, Muzeul de Istorie, cinematograful, biblioteca municipală și monumente de arhitectură.</p>
+            <div class="card-footer-row">
+              <span class="card-action-hint">Detalii secțiune</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- 5. Școli (Schools) -->
+        <article class="menu-card" id="card-action-schools" role="button" tabindex="0">
+          <div class="card-glow card-glow-cyan"></div>
+          <div class="card-icon-wrap bg-cyan">
+            <svg viewBox="0 0 24 24" width="28" height="28" fill="currentColor">
+              <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+            </svg>
+          </div>
+          <div class="card-content">
+            <div class="card-header-row">
+              <h2 class="card-title">Școli & Educație</h2>
+              <span class="badge-pill badge-soon">În curând</span>
+            </div>
+            <p class="card-desc">Colegiul Național „Anastasescu”, licee tehnologice, școli gimnaziale, grădinițe și centre educaționale locale.</p>
+            <div class="card-footer-row">
+              <span class="card-action-hint">Detalii secțiune</span>
+              <span class="card-arrow">→</span>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <footer class="menu-footer">
+        <p>Roșiori Map &copy; 2026 · Ghid Urban & Platformă Comunitară</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ==================== 2. EMPTY / BLANK SECTION VIEW ==================== -->
+  <section id="view-empty-section" class="empty-section-view" hidden>
+    <div class="empty-section-container">
+      <nav class="empty-nav glass">
+        <button id="btn-empty-back" class="chip" type="button" aria-label="Înapoi la Meniu Principal">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          <span>Meniu Principal</span>
+        </button>
+        <span class="empty-nav-title" id="empty-section-nav-title">Secțiune</span>
+      </nav>
+
+      <div class="empty-card glass">
+        <div class="empty-icon-halo" id="empty-section-icon"></div>
+        <span class="badge-pill badge-soon">Modul în pregătire</span>
+        <h2 class="empty-title" id="empty-section-title">Titlu Secțiune</h2>
+        <p class="empty-desc" id="empty-section-desc">Datele și locațiile pentru această secțiune sunt în curs de colectare.</p>
+
+        <div class="empty-placeholder-box">
+          <div class="empty-box-title">
+            <svg viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M11 7h2v2h-2zm0 4h2v6h-2zm1-9C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/></svg>
+            <span>În curs de actualizare</span>
+          </div>
+          <ul class="empty-planned-list" id="empty-section-list"></ul>
+        </div>
+
+        <div class="empty-actions">
+          <button id="btn-empty-return" class="btn primary" type="button">
+            ← Înapoi la Meniu Principal
+          </button>
+          <button id="btn-empty-go-map" class="btn secondary" type="button">
+            Mergi la Harta Rezervări →
+          </button>
+        </div>
       </div>
     </div>
-    <nav class="top-actions">
-      <button id="btn-my-res" class="chip" type="button" aria-label="Rezervările mele">
-        <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
-        <span>Rezervările mele</span>
-      </button>
-      <button id="btn-menu" class="chip menu-btn" type="button" aria-label="Menu" title="Menu">
-        <svg viewBox="0 0 24 24" width="18" height="18" class="menu-sacred-icon" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
-          <line x1="12" y1="3" x2="12" y2="21" stroke="var(--accent)" stroke-width="1.6" />
-          <line x1="6.5" y1="9.5" x2="17.5" y2="9.5" stroke="var(--accent)" stroke-width="1.6" />
-          <path d="M4 8.5c2.5-3 5-3.5 8-3.5s5.5.5 8 3.5" stroke="currentColor" stroke-width="1.2" opacity="0.8" />
-          <path d="M4 14.5c2.5 3 5 3.5 8 3.5s5.5-.5 8-3.5" stroke="currentColor" stroke-width="1.2" opacity="0.8" />
-        </svg>
-        <span class="menu-label">Menu</span>
-      </button>
-    </nav>
-  </header>
+  </section>
 
-  <main class="layout">
-    <aside class="sidebar glass" id="sidebar">
-      <div class="sheet-handle" id="sheet-handle" aria-hidden="true"></div>
-      <div class="search-wrap">
-        <svg viewBox="0 0 24 24" width="18" height="18" class="search-ico"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"/></svg>
-        <input id="search" type="search" placeholder="Caută restaurant, preparat…" autocomplete="off" />
+  <!-- ==================== 3. RESTAURANT RESERVATION MAP APP ==================== -->
+  <div id="view-map-app" class="map-app-view" hidden>
+    <header class="topbar glass">
+      <div class="brand" id="brand-home-btn" role="button" tabindex="0" title="Meniu Principal">
+        <img src="icons/icon.svg?v=2" alt="Roșiori Map Logo" class="brand-logo" width="40" height="40" />
+        <div>
+          <h1 class="brand-title">Roșiori Map</h1>
+          <p class="tagline">Restaurante · Meniuri · Rezervări</p>
+        </div>
       </div>
-      <div class="filters" id="filters" role="tablist"></div>
-      <p class="result-count" id="result-count"></p>
-      <ul class="list" id="list"></ul>
-      <footer class="sidebar-footer" id="sidebar-footer" role="button" tabindex="0" title="Despre autor și aplicație">
-        <div class="sacred-monogram">☩</div>
-        <span>Dezvoltat de <strong>Popa Bogdan (theratzul)</strong></span>
-        <span class="sidebar-footer-tag">devops · linux admin · christian</span>
-      </footer>
-    </aside>
-    <section class="map-wrap">
-      <div id="map" aria-label="Harta Roșiorii de Vede"></div>
-      <div class="map-brand-badge glass" id="map-brand-badge" title="Roșiori de Vede">
-        <img src="icons/icon.svg?v=2" alt="Roșiori Map Icon" width="28" height="28" class="map-badge-img" />
-        <span class="map-badge-label">Roșiori de Vede</span>
-      </div>
-      <button id="btn-locate" class="fab" type="button" aria-label="Locația mea">
-        <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 3h-2.1A7 7 0 0 0 13 5.1V3h-2v2.1A7 7 0 0 0 5.1 11H3v2h2.1a7 7 0 0 0 5.9 5.9V21h2v-2.1a7 7 0 0 0 5.9-5.9H21v-2Zm-9 6a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/></svg>
-      </button>
-    </section>
-  </main>
+      <nav class="top-actions">
+        <button id="btn-back-to-menu" class="chip menu-home-chip" type="button" aria-label="Meniu Principal" title="Înapoi la Meniu Principal">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
+          <span>Meniu</span>
+        </button>
+        <button id="btn-my-res" class="chip" type="button" aria-label="Rezervările mele">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
+          <span>Rezervările mele</span>
+        </button>
+        <button id="btn-menu" class="chip menu-btn" type="button" aria-label="Menu" title="Menu">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+            <path d="M12 8c1.1 0 2-.9 2-2s-.9-2-2-2-2 .9-2 2 .9 2 2 2zm0 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm0 6c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
+          </svg>
+          <span class="menu-label">Opțiuni</span>
+        </button>
+      </nav>
+    </header>
+
+    <main class="layout">
+      <aside class="sidebar glass" id="sidebar">
+        <div class="sheet-handle" id="sheet-handle" aria-hidden="true"></div>
+        <div class="search-wrap">
+          <svg viewBox="0 0 24 24" width="18" height="18" class="search-ico"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"/></svg>
+          <input id="search" type="search" placeholder="Caută restaurant, preparat…" autocomplete="off" />
+        </div>
+        <div class="filters" id="filters" role="tablist"></div>
+        <p class="result-count" id="result-count"></p>
+        <ul class="list" id="list"></ul>
+        <footer class="sidebar-footer" id="sidebar-footer" role="button" tabindex="0" title="Despre autor și aplicație">
+          <div class="sacred-monogram">☩</div>
+          <span>Dezvoltat de <strong>Popa Bogdan (theratzul)</strong></span>
+          <span class="sidebar-footer-tag">devops · linux admin · christian</span>
+        </footer>
+      </aside>
+      <section class="map-wrap">
+        <div id="map" aria-label="Harta Roșiorii de Vede"></div>
+        <div class="map-brand-badge glass" id="map-brand-badge" title="Roșiori de Vede">
+          <img src="icons/icon.svg?v=2" alt="Roșiori Map Icon" width="28" height="28" class="map-badge-img" />
+          <span class="map-badge-label">Roșiori de Vede</span>
+        </div>
+        <button id="btn-locate" class="fab" type="button" aria-label="Locația mea">
+          <svg viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 8a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm9 3h-2.1A7 7 0 0 0 13 5.1V3h-2v2.1A7 7 0 0 0 5.1 11H3v2h2.1a7 7 0 0 0 5.9 5.9V21h2v-2.1a7 7 0 0 0 5.9-5.9H21v-2Zm-9 6a5 5 0 1 1 0-10 5 5 0 0 1 0 10Z"/></svg>
+        </button>
+      </section>
+    </main>
+  </div>
 
   <!-- Restaurant detail drawer -->
   <div class="drawer-backdrop" id="drawer-backdrop" hidden></div>

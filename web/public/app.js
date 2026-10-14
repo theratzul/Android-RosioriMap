@@ -583,6 +583,16 @@
         </p>
 
         <div class="sacred-menu-list">
+          <div class="sacred-menu-item" id="menu-item-home" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Meniu Principal (Portal)</div>
+              <div class="sacred-menu-item-sub">Înapoi la ecranul principal cu toate categoriile</div>
+            </div>
+          </div>
+
           <div class="sacred-menu-item" id="menu-item-reservations" role="button" tabindex="0">
             <div class="sacred-menu-item-icon">
               <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
@@ -635,9 +645,11 @@
     `);
 
     $('#menu-close-btn')?.addEventListener('click', closeModal);
+    $('#menu-item-home')?.addEventListener('click', () => { closeModal(); showView('menu'); });
     $('#menu-item-reservations')?.addEventListener('click', () => { closeModal(); openMyReservations(); });
     $('#menu-item-theme')?.addEventListener('click', () => { toggleTheme(); openAppMenu(); });
     $('#menu-item-settings')?.addEventListener('click', () => { closeModal(); openSettings(); });
+    $('#menu-item-about')?.addEventListener('click', () => { closeModal(); openAbout(); });
     $('#menu-item-about')?.addEventListener('click', () => { closeModal(); openAbout(); });
   }
 
@@ -720,11 +732,161 @@
   });
   $('#search').addEventListener('focus', () => { if (innerWidth <= 760) setSheet('expanded'); });
 
+  /* ---------------- City Portal & View Management ---------------- */
+  const BLANK_SECTIONS = {
+    parks: {
+      title: 'Parcuri & Zone Verzi',
+      navTitle: 'Parcuri & Zone Verzi',
+      desc: 'Parcul Central, alei de promenadă, zone de relaxare în aer liber, foișoare și locuri de joacă pentru familii din Roșiorii de Vede.',
+      bgClass: 'bg-emerald',
+      iconSvg: `<svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor">
+        <path d="M12 2C9.24 2 7 4.24 7 7c0 .64.12 1.25.35 1.82C5.4 9.55 4 11.61 4 14c0 3.31 2.69 6 6 6h1v2h2v-2h1c3.31 0 6-2.69 6-6 0-2.39-1.4-4.45-3.35-5.18.23-.57.35-1.18.35-1.82 0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3 0 .42-.09.82-.24 1.18l-.48 1.15 1.18.42C17.06 10.33 18 12.06 18 14c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4 0-1.94.94-3.67 2.54-4.25l1.18-.42-.48-1.15C9.09 7.82 9 7.42 9 7c0-1.66 1.34-3 3-3z"/>
+      </svg>`,
+      items: [
+        'Parcul Central Municipal și foișoarele de promenadă',
+        'Locuri de joacă amenajate pentru copii și preșcolari',
+        'Zone de fitness în aer liber și bănci de relaxare',
+        'Spații verzi cartografiate și puncte de odihnă'
+      ]
+    },
+    history: {
+      title: 'Istorie & Patrimoniu',
+      navTitle: 'Istorie & Patrimoniu',
+      desc: 'Cronica istorică a orașului Roșiorii de Vede, prima atestare documentară din 1385, vestigii arheologice și personalități locale.',
+      bgClass: 'bg-amber',
+      iconSvg: `<svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor">
+        <path d="M12 3L2 8v2h20V8L12 3zm-7 7v9h2v-9H5zm4 0v9h2v-9H9zm4 0v9h2v-9h-2zm4 0v9h2v-9h-2zm-13 11v2h18v-2H4z"/>
+      </svg>`,
+      items: [
+        'Prima atestare documentară a târgului Ruși (1385)',
+        'Centrul vechi comercial și monumente de patrimoniu',
+        'Personalități teleormănene, scriitori și ctitori',
+        'Povești, legende locale și cronici memoriale'
+      ]
+    },
+    culture: {
+      title: 'Clădiri Culturale & Muzee',
+      navTitle: 'Clădiri Culturale',
+      desc: 'Instituțiile de cultură, teatrul municipal, cinematograful, biblioteca și așezămintele artistice din Roșiorii de Vede.',
+      bgClass: 'bg-purple',
+      iconSvg: `<svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor">
+        <path d="M19.5 21a3 3 0 0 0 3-3v-4.5a3 3 0 0 0-3-3h-1.5V6a3 3 0 0 0-3-3h-6a3 3 0 0 0-3 3v4.5H4.5a3 3 0 0 0-3 3V18a3 3 0 0 0 3 3h15zM8 6a1 1 0 0 1 1-1h6a1 1 0 0 1 1 1v4.5H8V6zm-3.5 6.5h15a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1h-15a1 1 0 0 1-1-1v-4.5a1 1 0 0 1 1-1z"/>
+      </svg>`,
+      items: [
+        'Casa Municipală de Cultură',
+        'Muzeul de Istorie „Petre Voivozeanu”',
+        'Biblioteca Municipală „Gala Galaction”',
+        'Săli de expoziție, cinematograf și evenimente'
+      ]
+    },
+    schools: {
+      title: 'Școli & Educație',
+      navTitle: 'Școli & Educație',
+      desc: 'Unitățile de învățământ preuniversitar, colegii de prestigiu, licee tehnologice și școli gimnaziale din Roșiorii de Vede.',
+      bgClass: 'bg-cyan',
+      iconSvg: `<svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor">
+        <path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/>
+      </svg>`,
+      items: [
+        'Colegiul Național „Anastasescu”',
+        'Liceul Tehnologic „Anghel Saligny” & Liceul Tehnologic „Virgil Madgearu”',
+        'Școlile Gimnaziale „Mihai Eminescu”, „Dan Berindei” și „Zaharia Stancu”',
+        'Grădinițe municipale & centre de sprijin educațional'
+      ]
+    }
+  };
+
+  let currentView = 'menu';
+  const viewMainMenu = $('#view-main-menu');
+  const viewMapApp = $('#view-map-app');
+  const viewEmptySection = $('#view-empty-section');
+
+  function showView(view, param = null) {
+    currentView = view;
+    if (view === 'menu') {
+      if (viewMainMenu) viewMainMenu.hidden = false;
+      if (viewMapApp) viewMapApp.hidden = true;
+      if (viewEmptySection) viewEmptySection.hidden = true;
+      if (viewMainMenu) viewMainMenu.scrollTop = 0;
+      history.replaceState(null, '', '#menu');
+    } else if (view === 'map') {
+      if (viewMainMenu) viewMainMenu.hidden = true;
+      if (viewMapApp) viewMapApp.hidden = false;
+      if (viewEmptySection) viewEmptySection.hidden = true;
+      setTimeout(() => {
+        map.invalidateSize();
+      }, 80);
+      if (param) openRestaurant(param);
+      history.replaceState(null, '', param ? `#${param}` : '#map');
+    } else if (view === 'section') {
+      const data = BLANK_SECTIONS[param] || BLANK_SECTIONS.parks;
+      if (viewMainMenu) viewMainMenu.hidden = true;
+      if (viewMapApp) viewMapApp.hidden = true;
+      if (viewEmptySection) {
+        viewEmptySection.hidden = false;
+        viewEmptySection.scrollTop = 0;
+      }
+      
+      const navTitle = $('#empty-section-nav-title');
+      const title = $('#empty-section-title');
+      const desc = $('#empty-section-desc');
+      const iconWrap = $('#empty-section-icon');
+      const listEl = $('#empty-section-list');
+
+      if (navTitle) navTitle.textContent = data.navTitle;
+      if (title) title.textContent = data.title;
+      if (desc) desc.textContent = data.desc;
+      if (iconWrap) {
+        iconWrap.className = `empty-icon-halo ${data.bgClass}`;
+        iconWrap.innerHTML = data.iconSvg;
+      }
+      if (listEl) {
+        listEl.innerHTML = data.items.map(it => `<li>${it}</li>`).join('');
+      }
+      history.replaceState(null, '', `#${param}`);
+    }
+  }
+
+  // Main menu card actions
+  $('#card-action-restaurants')?.addEventListener('click', () => showView('map'));
+  $('#card-action-parks')?.addEventListener('click', () => showView('section', 'parks'));
+  $('#card-action-history')?.addEventListener('click', () => showView('section', 'history'));
+  $('#card-action-culture')?.addEventListener('click', () => showView('section', 'culture'));
+  $('#card-action-schools')?.addEventListener('click', () => showView('section', 'schools'));
+
+  ['restaurants', 'parks', 'history', 'culture', 'schools'].forEach(id => {
+    $(`#card-action-${id}`)?.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        if (id === 'restaurants') showView('map');
+        else showView('section', id);
+      }
+    });
+  });
+
+  // Header and back buttons
+  $('#btn-back-to-menu')?.addEventListener('click', () => showView('menu'));
+  $('#brand-home-btn')?.addEventListener('click', () => showView('menu'));
+  $('#brand-home-btn')?.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); showView('menu'); }
+  });
+
+  $('#btn-empty-back')?.addEventListener('click', () => showView('menu'));
+  $('#btn-empty-return')?.addEventListener('click', () => showView('menu'));
+  $('#btn-empty-go-map')?.addEventListener('click', () => showView('map'));
+
+  $('#menu-btn-theme')?.addEventListener('click', toggleTheme);
+  $('#menu-btn-about')?.addEventListener('click', openAbout);
+
   /* ---------------- Android & Back Navigation ---------------- */
   window.handleBackPressed = () => {
     if (modal.open) { closeModal(); return true; }
     if ($('#drawer').classList.contains('open')) { closeDrawer(); return true; }
     if (sheet.classList.contains('expanded')) { setSheet('mid'); return true; }
+    if (currentView !== 'menu') {
+      showView('menu');
+      return true;
+    }
     return false;
   };
   window.addEventListener('popstate', () => {
@@ -739,8 +901,21 @@
     try {
       state.restaurants = await api.restaurants();
       renderFilters(); renderList();
-      const deep = location.hash.slice(1); if (deep) openRestaurant(deep);
-    } catch (e) { console.error(e); toast('Nu am putut încărca restaurantele', true); }
+      const hash = location.hash.slice(1);
+      if (hash === 'map') {
+        showView('map');
+      } else if (['parks', 'history', 'culture', 'schools'].includes(hash)) {
+        showView('section', hash);
+      } else if (hash && state.restaurants.some(r => r.id === hash)) {
+        showView('map', hash);
+      } else {
+        showView('menu');
+      }
+    } catch (e) {
+      console.error(e);
+      toast('Nu am putut încărca restaurantele', true);
+      showView('menu');
+    }
   })();
 
   if ('serviceWorker' in navigator && location.protocol === 'https:' && location.hostname !== 'appassets.androidplatform.net') {
