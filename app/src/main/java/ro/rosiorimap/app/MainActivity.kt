@@ -230,6 +230,13 @@ class MainActivity : AppCompatActivity() {
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
+            R.id.menu_parks -> {
+                binding.webView.evaluateJavascript(
+                    "window.showView && window.showView('parks');",
+                    null
+                )
+                true
+            }
             R.id.menu_about -> {
                 showAboutDialog()
                 true

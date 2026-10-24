@@ -2,22 +2,71 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
+      - 'feature/**'
+      - 'feature/*'
+      - 'feat/**'
+      - 'bugfix/**'
+      - 'hotfix/**'
   pull_request:
     branches: [ main ]
   workflow_dispatch:
+    inputs:
+      notify_email:
+        description: 'Trimite email cu noile funcționalități către th3ratzul@gmail.com'
+        required: false
+        type: boolean
+        default: true
 
 permissions:
   contents: write
 
 jobs:
   build:
-    name: Build Android APK
+    name: Build Android APK & Notificare Release
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Compute Build & Version Metadata
+        id: meta
+        run: |
+          RAW_BRANCH="${{ github.head_ref || github.ref_name }}"
+          # Clean branch name for filename/tags: replace slashes and special chars with hyphens
+          BRANCH_SLUG=$(echo "$RAW_BRANCH" | sed -E 's/[^a-zA-Z0-9._-]+/-/g' | sed -E 's/^-+|-+$//g' | tr '[:upper:]' '[:lower:]')
+          
+          if [ "$RAW_BRANCH" = "main" ]; then
+            VERSION_TAG="v1.0.${{ github.run_number }}"
+            RELEASE_NAME="Roșiori Map v1.0.${{ github.run_number }}"
+            IS_FEATURE="false"
+            APK_NAME="RosioriMap-v1.0.${{ github.run_number }}.apk"
+          else
+            VERSION_TAG="v1.0.${{ github.run_number }}-${BRANCH_SLUG}"
+            RELEASE_NAME="Roșiori Map v1.0.${{ github.run_number }} (${RAW_BRANCH})"
+            IS_FEATURE="true"
+            APK_NAME="RosioriMap-${BRANCH_SLUG}-v1.0.${{ github.run_number }}.apk"
+          fi
+          
+          echo "branch_raw=$RAW_BRANCH" >> $GITHUB_OUTPUT
+          echo "branch_slug=$BRANCH_SLUG" >> $GITHUB_OUTPUT
+          echo "version_tag=$VERSION_TAG" >> $GITHUB_OUTPUT
+          echo "release_name=$RELEASE_NAME" >> $GITHUB_OUTPUT
+          echo "is_feature=$IS_FEATURE" >> $GITHUB_OUTPUT
+          echo "apk_name=$APK_NAME" >> $GITHUB_OUTPUT
+          
+          echo "Computed Version Tag: $VERSION_TAG"
+          echo "Branch: $RAW_BRANCH (Slug: $BRANCH_SLUG)"
+          echo "Is Feature: $IS_FEATURE"
+
+      - name: Set up Python for Release Email Generator
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
 
       - name: Set up JDK 17
         uses: actions/setup-java@v4
@@ -57,38 +106,98 @@ jobs:
           fi
           echo "Found APK at: $APK_FILE"
           
-          # Copy to a clean standard name
           mkdir -p dist
-          cp "$APK_FILE" dist/RosioriMap-v1.0.0-debug.apk
-          echo "apk_path=dist/RosioriMap-v1.0.0-debug.apk" >> $GITHUB_OUTPUT
-          echo "apk_filename=RosioriMap-v1.0.0-debug.apk" >> $GITHUB_OUTPUT
+          FINAL_APK="dist/${{ steps.meta.outputs.apk_name }}"
+          cp "$APK_FILE" "$FINAL_APK"
+          # Also keep generic debug name for backward compatibility
+          cp "$APK_FILE" dist/RosioriMap-latest-debug.apk
+          
+          APK_SIZE_BYTES=$(stat -c%s "$FINAL_APK" 2>/dev/null || stat -f%z "$FINAL_APK" 2>/dev/null || wc -c < "$FINAL_APK")
+          echo "apk_path=$FINAL_APK" >> $GITHUB_OUTPUT
+          echo "apk_filename=${{ steps.meta.outputs.apk_name }}" >> $GITHUB_OUTPUT
+          echo "apk_size=$APK_SIZE_BYTES" >> $GITHUB_OUTPUT
+          echo "Prepared APK at: $FINAL_APK (Size: $APK_SIZE_BYTES bytes)"
 
       - name: Upload APK as Workflow Artifact
         uses: actions/upload-artifact@v4
         with:
-          name: RosioriMap-Android-APK
+          name: RosioriMap-${{ steps.meta.outputs.version_tag }}-APK
           path: ${{ steps.apk_info.outputs.apk_path }}
           retention-days: 30
 
+      - name: Generate Release Notification Email HTML
+        id: email_gen
+        run: |
+          COMMIT_MSG=$(git log -1 --pretty=%B)
+          python3 .github/scripts/generate_release_email.py \
+            --version-tag "${{ steps.meta.outputs.version_tag }}" \
+            --branch "${{ steps.meta.outputs.branch_raw }}" \
+            --commit-hash "${{ github.sha }}" \
+            --commit-msg "$COMMIT_MSG" \
+            --run-url "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" \
+            --output "dist/email_notification.html"
+          
+          echo "email_path=dist/email_notification.html" >> $GITHUB_OUTPUT
+
+      - name: Upload Email Preview as Workflow Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: Release-Notification-Email-HTML
+          path: dist/email_notification.html
+          retention-days: 14
+
+      - name: Check Email Credentials
+        id: check_email
+        run: |
+          if [ -n "${{ secrets.MAIL_USERNAME || secrets.SMTP_USERNAME }}" ] && [ -n "${{ secrets.MAIL_PASSWORD || secrets.SMTP_PASSWORD }}" ]; then
+            echo "can_send=true" >> $GITHUB_OUTPUT
+            echo "Email credentials detected."
+          else
+            echo "can_send=false" >> $GITHUB_OUTPUT
+            echo "::notice title=SMTP Credentials Not Configured::MAIL_USERNAME and MAIL_PASSWORD are not configured in GitHub Repository Secrets. If you wish to receive automated emails at th3ratzul@gmail.com, please add MAIL_USERNAME (e.g. your Gmail) and MAIL_PASSWORD (e.g. an App Password) to Settings -> Secrets and variables -> Actions."
+          fi
+
+      - name: Send Release Email to th3ratzul@gmail.com
+        if: (github.event_name == 'push' || (github.event_name == 'workflow_dispatch' && (inputs.notify_email == true || inputs.notify_email == 'true' || inputs.notify_email == ''))) && steps.check_email.outputs.can_send == 'true'
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: ${{ secrets.MAIL_SERVER || 'smtp.gmail.com' }}
+          server_port: ${{ secrets.MAIL_PORT || 465 }}
+          username: ${{ secrets.MAIL_USERNAME || secrets.SMTP_USERNAME }}
+          password: ${{ secrets.MAIL_PASSWORD || secrets.SMTP_PASSWORD }}
+          subject: "Roșiori Map ${{ steps.meta.outputs.version_tag }} - Build Nou & Funcționalități (${{ steps.meta.outputs.branch_raw }})"
+          to: th3ratzul@gmail.com
+          from: "Roșiori Map CI/CD <${{ secrets.MAIL_USERNAME || secrets.SMTP_USERNAME }}>"
+          html_body: file://dist/email_notification.html
+          # Attach the compiled APK if under 20MB (Gmail SMTP limit is 25MB)
+          attachments: ${{ steps.apk_info.outputs.apk_size < 20971520 && steps.apk_info.outputs.apk_path || '' }}
+          priority: high
+        continue-on-error: true
+
       - name: Create GitHub Release
-        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        if: github.event_name == 'push'
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: v1.0.${{ github.run_number }}
-          name: Roșiori Map v1.0.${{ github.run_number }}
+          tag_name: ${{ steps.meta.outputs.version_tag }}
+          name: ${{ steps.meta.outputs.release_name }}
           draft: false
-          prerelease: false
+          prerelease: ${{ steps.meta.outputs.is_feature == 'true' }}
           body: |
-            ## Roșiori Map – Android APK Release
+            ## ${{ steps.meta.outputs.release_name }}
             
-            Noua versiune a aplicației pentru restaurante și rezervări din **Roșiorii de Vede**:
-            - 🍽️ **Meniuri complete & autentice** pentru toate restaurantele, pizzeriile, fast-food-urile, patiseriile și cafenelele locale.
-            - 🗺️ **Harta OpenStreetMap integrată fără cheie API**, plus posibilitate de personalizare în setări.
-            - 🔍 **Căutare inteligentă** în preparate și categorii de meniu.
-            - 📱 **Integrare nativă Android**: apelare telefonică directă, traseu prin Google Maps/Waze, partajare rapidă și funcționare offline.
+            Pachet Android APK generat automat pentru ramura **`${{ steps.meta.outputs.branch_raw }}`** (commit `${{ github.sha }}`).
             
-            ### Descărcare:
-            Descarcă fișierul **`RosioriMap-v1.0.0-debug.apk`** de mai jos și instalează-l pe telefonul tău Android.
+            ### ✨ Funcționalități Noi & Actualizări:
+            - 🌳 **Submeniul „Parcuri & Zone Verzi”**: Ghid dedicat parcurilor, pădurii, agrementului, ștrandului și bâlciului.
+            - 🌲 **Pădurea Roșiori**: Istoric, trasee de drumeție și natură în lunca râului Vedea.
+            - 🏊 **Ștrandul Municipal & Baza de Agrement Vedea**: Agrement acvatic și facilități sportive (fotbal nocturnă, tenis, fitness).
+            - 🎡 **Bâlciul Anual Tradițional (Obor)**: Târg secular atestat istoric din 1385, hrisovul domnesc din 1695, parcul de distracții și vestiții mici la grătar.
+            - 🏛️ **Parcurile Istorice ale Municipiului**: Parcul Central „Nicolae Popescu-Vedea”, Parcul Nicolae Bălcescu, Parcul C.F.R. Gara de Nord și Parcul Sfânta Vineri.
+            - 🗺️ **Harta Smarald Leaflet & Comutator [Restaurante | Parcuri]**: Filtrare dinamică, pini de smarald și sertar informativ.
+            - 📱 **Integrare Meniu Nativ Android**: Opțiune directă în meniul nativ (`main_menu.xml`).
+            
+            ### 📥 Descărcare APK:
+            Descarcă fișierul **`${{ steps.meta.outputs.apk_name }}`** de mai jos și instalează-l pe dispozitivul tău Android.
           files: ${{ steps.apk_info.outputs.apk_path }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

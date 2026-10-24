@@ -9,7 +9,39 @@
   const TYPES = { all: 'Toate', restaurant: 'Restaurante', pizzerie: 'Pizzerii', cafenea: 'Cafenele', fastfood: 'Fast-food', patiserie: 'Patiserii', bar: 'Baruri' };
   const EMOJI = { restaurant: '🍽️', pizzerie: '🍕', cafenea: '☕', fastfood: '🍔', patiserie: '🥐', bar: '🍹' };
 
-  const state = { restaurants: [], filter: 'all', query: '', activeId: null, markers: new Map(), userMarker: null };
+  const PARK_TYPES = {
+    all: 'Toate',
+    parc: 'Parcuri Urbane',
+    padure: 'Pădure & Natură',
+    agrement: 'Baze Agrement',
+    strand: 'Ștrand & Natație',
+    balci: 'Bâlci & Tradiție'
+  };
+  const PARK_EMOJI = {
+    parc: '🌳',
+    padure: '🌲',
+    agrement: '⚽',
+    strand: '🏊',
+    balci: '🎡'
+  };
+
+  const state = {
+    restaurants: [],
+    parks: [],
+    mode: 'restaurants', // 'restaurants' | 'parks'
+    filter: 'all',
+    parksFilter: 'all',
+    submenuFilter: 'all',
+    query: '',
+    parksQuery: '',
+    submenuQuery: '',
+    activeId: null,
+    activeParkId: null,
+    markers: new Map(),
+    parkMarkers: new Map(),
+    userMarker: null,
+    userPos: null
+  };
 
   /* ---------------- Settings / storage ---------------- */
   const store = {
@@ -49,6 +81,10 @@
     async restaurants() {
       try { return await http('/api/restaurants'); }
       catch { const r = await fetch('data/restaurants.json'); return r.json(); }
+    },
+    async parks() {
+      try { return await http('/api/parks'); }
+      catch { const r = await fetch('data/parks.json'); return r.json(); }
     },
     async availability(r, date) {
       if (isLocalMode()) return localSlots(r, date);
@@ -179,25 +215,71 @@
   function pinIcon(r, active) {
     return L.divIcon({ className: '', iconSize: [40, 40], iconAnchor: [20, 40], html: `<div class="pin${active ? ' active' : ''}"><span>${EMOJI[r.type] || '🍽️'}</span></div>` });
   }
+
+  function parkPinIcon(p, active) {
+    return L.divIcon({
+      className: '',
+      iconSize: [42, 42],
+      iconAnchor: [21, 42],
+      html: `<div class="pin pin-park${active ? ' active' : ''}"><span>${p.emoji || PARK_EMOJI[p.category] || '🌳'}</span></div>`
+    });
+  }
+
   function renderMarkers(list) {
     const ids = new Set(list.map((r) => r.id));
     state.markers.forEach((m, id) => { if (!ids.has(id)) { map.removeLayer(m); state.markers.delete(id); } });
     list.forEach((r) => {
       if (state.markers.has(r.id)) return;
       const m = L.marker([r.lat, r.lng], { icon: pinIcon(r, false), title: r.name, riseOnHover: true }).addTo(map);
-      m.on('click', () => openRestaurant(r.id));
+      m.on('click', () => {
+        setMode('restaurants');
+        openRestaurant(r.id);
+      });
       state.markers.set(r.id, m);
     });
   }
-  function setActiveMarker(id) {
-    state.markers.forEach((m, mid) => {
-      const r = state.restaurants.find((x) => x.id === mid);
-      m.setIcon(pinIcon(r, mid === id)); m.setZIndexOffset(mid === id ? 1000 : 0);
+
+  function renderParkMarkers(list) {
+    const ids = new Set(list.map((p) => p.id));
+    state.parkMarkers.forEach((m, id) => {
+      if (!ids.has(id)) {
+        map.removeLayer(m);
+        state.parkMarkers.delete(id);
+      }
+    });
+    list.forEach((p) => {
+      if (state.parkMarkers.has(p.id)) return;
+      const m = L.marker([p.lat, p.lng], {
+        icon: parkPinIcon(p, false),
+        title: p.name,
+        riseOnHover: true
+      }).addTo(map);
+      m.on('click', () => {
+        setMode('parks');
+        openPark(p.id);
+      });
+      state.parkMarkers.set(p.id, m);
     });
   }
 
-  /* ---------------- List ---------------- */
-  function filtered() {
+  function setActiveMarker(id) {
+    state.markers.forEach((m, mid) => {
+      const r = state.restaurants.find((x) => x.id === mid);
+      if (r) m.setIcon(pinIcon(r, mid === id));
+      m.setZIndexOffset(mid === id ? 1000 : 0);
+    });
+  }
+
+  function setActiveParkMarker(id) {
+    state.parkMarkers.forEach((m, mid) => {
+      const p = state.parks.find((x) => x.id === mid);
+      if (p) m.setIcon(parkPinIcon(p, mid === id));
+      m.setZIndexOffset(mid === id ? 1000 : 0);
+    });
+  }
+
+  /* ---------------- List & Filters ---------------- */
+  function filteredRestaurants() {
     const q = state.query.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
     let list = state.restaurants.filter((r) => state.filter === 'all' || r.type === state.filter);
@@ -209,27 +291,97 @@
     return list;
   }
 
+  function filteredParks() {
+    const q = state.parksQuery.trim().toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    let list = state.parks.filter((p) => state.parksFilter === 'all' || p.category === state.parksFilter);
+    if (q) {
+      list = list.filter((p) =>
+        norm(p.name).includes(q) ||
+        norm(p.categoryLabel).includes(q) ||
+        norm(p.description).includes(q) ||
+        norm(p.history).includes(q) ||
+        norm(p.address).includes(q) ||
+        (p.highlights || []).some((h) => norm(h).includes(q)) ||
+        (p.features || []).some((f) => norm(f).includes(q))
+      );
+    }
+    if (state.userPos) list = [...list].sort((a, b) => distanceKm(state.userPos, [a.lat, a.lng]) - distanceKm(state.userPos, [b.lat, b.lng]));
+    return list;
+  }
+
+  function setMode(mode) {
+    state.mode = mode;
+    $('#btn-mode-restaurants')?.classList.toggle('active', mode === 'restaurants');
+    $('#btn-mode-restaurants')?.setAttribute('aria-selected', mode === 'restaurants');
+    $('#btn-mode-parks')?.classList.toggle('active', mode === 'parks');
+    $('#btn-mode-parks')?.setAttribute('aria-selected', mode === 'parks');
+
+    const searchInput = $('#search');
+    if (searchInput) {
+      searchInput.placeholder = mode === 'restaurants'
+        ? 'Caută restaurant, preparat…'
+        : 'Caută parcuri, pădure, agrement, istoric…';
+      searchInput.value = mode === 'restaurants' ? state.query : state.parksQuery;
+    }
+
+    renderFilters();
+    renderList();
+  }
+
   function renderFilters() {
-    const present = new Set(state.restaurants.map((r) => r.type));
-    $('#filters').innerHTML = Object.entries(TYPES).filter(([k]) => k === 'all' || present.has(k))
-      .map(([k, v]) => `<button class="filter${state.filter === k ? ' active' : ''}" data-filter="${k}" id="filter-${k}" role="tab">${k === 'all' ? '' : EMOJI[k] + ' '}${v}</button>`).join('');
+    const filtersWrap = $('#filters');
+    if (!filtersWrap) return;
+    if (state.mode === 'restaurants') {
+      const present = new Set(state.restaurants.map((r) => r.type));
+      filtersWrap.innerHTML = Object.entries(TYPES).filter(([k]) => k === 'all' || present.has(k))
+        .map(([k, v]) => `<button class="filter${state.filter === k ? ' active' : ''}" data-filter="${k}" id="filter-${k}" role="tab">${k === 'all' ? '' : EMOJI[k] + ' '}${v}</button>`).join('');
+    } else {
+      filtersWrap.innerHTML = Object.entries(PARK_TYPES)
+        .map(([k, v]) => `<button class="filter${state.parksFilter === k ? ' active' : ''}" data-filter="${k}" id="filter-park-${k}" role="tab">${k === 'all' ? '✨ ' : PARK_EMOJI[k] + ' '}${v}</button>`).join('');
+    }
   }
 
   function renderList() {
-    const list = filtered();
-    $('#result-count').textContent = `${list.length} ${list.length === 1 ? 'local' : 'localuri'} în Roșiorii de Vede`;
-    $('#list').innerHTML = list.length ? list.map((r, i) => {
-      const open = isOpen(r);
-      const dist = state.userPos ? `<span>📍 ${distanceKm(state.userPos, [r.lat, r.lng]).toFixed(1)} km</span>` : '';
-      return `<li class="card${state.activeId === r.id ? ' active' : ''}" data-id="${r.id}" id="card-${r.id}" style="animation-delay:${Math.min(i * 30, 300)}ms" tabindex="0">
-        <div class="card-emoji">${EMOJI[r.type] || '🍽️'}</div>
-        <div><h3>${esc(r.name)}</h3><div class="meta"><span>${esc(r.cuisine)}</span>${dist}${r.priceLevel ? `<span>${'💰'.repeat(r.priceLevel)}</span>` : ''}</div></div>
-        <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
-          <span class="badge ${open ? 'open' : 'closed'}">${open ? 'Deschis' : 'Închis'}</span>
-          ${r.menu?.length ? '<span class="badge menu">Meniu</span>' : ''}
-        </div></li>`;
-    }).join('') : '<li class="empty">Niciun rezultat. Încearcă alt termen. 🔍</li>';
-    renderMarkers(list);
+    if (state.mode === 'restaurants') {
+      const list = filteredRestaurants();
+      $('#result-count').textContent = `${list.length} ${list.length === 1 ? 'local' : 'localuri'} în Roșiorii de Vede`;
+      $('#list').innerHTML = list.length ? list.map((r, i) => {
+        const open = isOpen(r);
+        const dist = state.userPos ? `<span>📍 ${distanceKm(state.userPos, [r.lat, r.lng]).toFixed(1)} km</span>` : '';
+        return `<li class="card${state.activeId === r.id ? ' active' : ''}" data-id="${r.id}" data-type="restaurant" id="card-${r.id}" style="animation-delay:${Math.min(i * 30, 300)}ms" tabindex="0">
+          <div class="card-emoji">${EMOJI[r.type] || '🍽️'}</div>
+          <div><h3>${esc(r.name)}</h3><div class="meta"><span>${esc(r.cuisine)}</span>${dist}${r.priceLevel ? `<span>${'💰'.repeat(r.priceLevel)}</span>` : ''}</div></div>
+          <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+            <span class="badge ${open ? 'open' : 'closed'}">${open ? 'Deschis' : 'Închis'}</span>
+            ${r.menu?.length ? '<span class="badge menu">Meniu</span>' : ''}
+          </div></li>`;
+      }).join('') : '<li class="empty">Niciun rezultat. Încearcă alt termen. 🔍</li>';
+      renderMarkers(list);
+      // Ensure park markers are also on map for discovery
+      renderParkMarkers(state.parks);
+    } else {
+      const list = filteredParks();
+      $('#result-count').textContent = `${list.length} ${list.length === 1 ? 'zonă verde / agrement' : 'zone verzi și de agrement'} în Roșiorii de Vede`;
+      $('#list').innerHTML = list.length ? list.map((p, i) => {
+        const dist = state.userPos ? `<span>📍 ${distanceKm(state.userPos, [p.lat, p.lng]).toFixed(1)} km</span>` : '';
+        return `<li class="card card-park-item${state.activeParkId === p.id ? ' active' : ''}" data-id="${p.id}" data-type="park" id="card-park-${p.id}" style="animation-delay:${Math.min(i * 30, 300)}ms" tabindex="0">
+          <div class="card-emoji" style="background:linear-gradient(135deg,#059669,#10b981);color:#fff">${p.emoji || PARK_EMOJI[p.category] || '🌳'}</div>
+          <div>
+            <h3>${esc(p.name)}</h3>
+            <div class="meta">
+              <span>${esc(p.categoryLabel)}</span>
+              ${dist}
+              <span>${esc(p.badge || '')}</span>
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:4px;align-items:flex-end">
+            <span class="badge open">Verde</span>
+            <span class="badge menu">Istoric</span>
+          </div></li>`;
+      }).join('') : '<li class="empty">Nicio zonă verde găsită. Încearcă alt termen. 🔍</li>';
+      renderParkMarkers(list);
+    }
   }
 
   /* ---------------- Drawer (restaurant details & menu) ---------------- */
@@ -336,11 +488,95 @@
     $('#drawer-backdrop').hidden = false; $('#drawer').scrollTop = 0;
     history.replaceState(null, '', '#' + r.id);
   }
+
+  /* ---------------- Drawer (park details & history) ---------------- */
+  function openPark(id) {
+    const p = state.parks.find((x) => x.id === id);
+    if (!p) return;
+    state.activeParkId = id;
+    state.activeId = null;
+    setActiveParkMarker(id);
+    setActiveMarker(null);
+    document.querySelectorAll('.card').forEach((c) => c.classList.toggle('active', c.dataset.id === id));
+    map.flyTo([p.lat, p.lng], Math.max(map.getZoom(), 15), { duration: 0.6 });
+
+    const dist = state.userPos ? distanceKm(state.userPos, [p.lat, p.lng]).toFixed(1) : null;
+
+    $('#drawer-content').innerHTML = `
+      <header class="hero hero-park">
+        <div class="emoji">${p.emoji || PARK_EMOJI[p.category] || '🌳'}</div>
+        <div style="margin-bottom:6px"><span class="badge-pill badge-live">${esc(p.badge || p.categoryLabel)}</span></div>
+        <h2>${esc(p.name)}</h2>
+        <p>${esc(p.description)}</p>
+        <div class="tags">
+          <span class="tag">🌿 ${esc(p.categoryLabel)}</span>
+          <span class="tag">🎟️ ${esc(p.admission)}</span>
+          <span class="tag">⏰ ${esc(p.schedule)}</span>
+          ${dist ? `<span class="tag">📍 ${dist} km distanță</span>` : ''}
+        </div>
+      </header>
+      <div class="actions">
+        <button class="btn primary" id="btn-park-directions" type="button">🧭 Traseu / Navigare GPS</button>
+        <button class="btn" id="btn-park-share" type="button">🔗 Distribuie</button>
+        <button class="btn" id="btn-park-to-submenu" type="button">🌳 Submeniu Parcuri</button>
+      </div>
+      <section class="section">
+        <h3>📍 Localizare & Accesibilitate</h3>
+        <div class="info-row">📍 <span><strong>Adresă:</strong> ${esc(p.address)}</span></div>
+        <div class="info-row">⏰ <span><strong>Program:</strong> ${esc(p.schedule)}</span></div>
+        <div class="info-row">🎟️ <span><strong>Tarif / Acces:</strong> ${esc(p.admission)}</span></div>
+      </section>
+      <section class="section">
+        <h3>📖 Istoric & Semnificație Tradițională</h3>
+        <div class="park-history-text">${esc(p.history)}</div>
+      </section>
+      <section class="section">
+        <h3>✨ Atracții & Repere Relevante</h3>
+        <ul class="park-highlights-list">
+          ${(p.highlights || []).map((h) => `<li>${esc(h)}</li>`).join('')}
+        </ul>
+      </section>
+      <section class="section">
+        <h3>🏷️ Facilități & Caracteristici</h3>
+        <div class="tags">
+          ${(p.features || []).map((f) => `<span class="tag tag-feature">✦ ${esc(f)}</span>`).join('')}
+        </div>
+      </section>`;
+
+    $('#btn-park-directions')?.addEventListener('click', () => bridge.navigate(p.lat, p.lng, p.name));
+    $('#btn-park-share')?.addEventListener('click', () => bridge.share(
+      `${p.name} – Roșiori Map`,
+      `Descoperă ${p.name} din Roșiorii de Vede pe Roșiori Map! Istoric, atracții și localizare GPS.`,
+      location.origin + location.pathname + '#park-' + p.id
+    ));
+    $('#btn-park-to-submenu')?.addEventListener('click', () => {
+      closeDrawer();
+      showView('parks');
+    });
+
+    $('#drawer').classList.add('open');
+    $('#drawer').setAttribute('aria-hidden', 'false');
+    $('#drawer-backdrop').hidden = false;
+    $('#drawer').scrollTop = 0;
+    history.replaceState(null, '', '#park-' + p.id);
+  }
+
   function closeDrawer() {
-    $('#drawer').classList.remove('open'); $('#drawer').setAttribute('aria-hidden', 'true');
-    $('#drawer-backdrop').hidden = true; state.activeId = null; setActiveMarker(null);
+    $('#drawer').classList.remove('open');
+    $('#drawer').setAttribute('aria-hidden', 'true');
+    $('#drawer-backdrop').hidden = true;
+    state.activeId = null;
+    state.activeParkId = null;
+    setActiveMarker(null);
+    setActiveParkMarker(null);
     document.querySelectorAll('.card.active').forEach((c) => c.classList.remove('active'));
-    history.replaceState(null, '', location.pathname + location.search);
+    if (currentView === 'map') {
+      history.replaceState(null, '', '#map');
+    } else if (currentView === 'parks') {
+      history.replaceState(null, '', '#parks');
+    } else {
+      history.replaceState(null, '', location.pathname + location.search);
+    }
   }
 
   /* ---------------- Modal helpers ---------------- */
@@ -593,6 +829,18 @@
             </div>
           </div>
 
+          <div class="sacred-menu-item" id="menu-item-parks" role="button" tabindex="0">
+            <div class="sacred-menu-item-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor">
+                <path d="M12 2C9.24 2 7 4.24 7 7c0 .64.12 1.25.35 1.82C5.4 9.55 4 11.61 4 14c0 3.31 2.69 6 6 6h1v2h2v-2h1c3.31 0 6-2.69 6-6 0-2.39-1.4-4.45-3.35-5.18.23-.57.35-1.18.35-1.82 0-2.76-2.24-5-5-5z"/>
+              </svg>
+            </div>
+            <div class="sacred-menu-item-text">
+              <div class="sacred-menu-item-title">Parcuri & Zone Verzi</div>
+              <div class="sacred-menu-item-sub">Parcul Central, Pădurea Roșiori, agrement și bâlci</div>
+            </div>
+          </div>
+
           <div class="sacred-menu-item" id="menu-item-reservations" role="button" tabindex="0">
             <div class="sacred-menu-item-icon">
               <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
@@ -646,10 +894,10 @@
 
     $('#menu-close-btn')?.addEventListener('click', closeModal);
     $('#menu-item-home')?.addEventListener('click', () => { closeModal(); showView('menu'); });
+    $('#menu-item-parks')?.addEventListener('click', () => { closeModal(); showView('parks'); });
     $('#menu-item-reservations')?.addEventListener('click', () => { closeModal(); openMyReservations(); });
     $('#menu-item-theme')?.addEventListener('click', () => { toggleTheme(); openAppMenu(); });
     $('#menu-item-settings')?.addEventListener('click', () => { closeModal(); openSettings(); });
-    $('#menu-item-about')?.addEventListener('click', () => { closeModal(); openAbout(); });
     $('#menu-item-about')?.addEventListener('click', () => { closeModal(); openAbout(); });
   }
 
@@ -683,12 +931,53 @@
   }
 
   /* ---------------- Events ---------------- */
-  $('#search').addEventListener('input', (e) => { state.query = e.target.value; renderList(); });
-  $('#filters').addEventListener('click', (e) => {
-    const b = e.target.closest('.filter'); if (!b) return; state.filter = b.dataset.filter; renderFilters(); renderList();
+  $('#search').addEventListener('input', (e) => {
+    if (state.mode === 'restaurants') {
+      state.query = e.target.value;
+    } else {
+      state.parksQuery = e.target.value;
+    }
+    renderList();
   });
-  $('#list').addEventListener('click', (e) => { const c = e.target.closest('.card'); if (c) openRestaurant(c.dataset.id); });
-  $('#list').addEventListener('keydown', (e) => { if (e.key === 'Enter') { const c = e.target.closest('.card'); if (c) openRestaurant(c.dataset.id); } });
+
+  $('#filters').addEventListener('click', (e) => {
+    const b = e.target.closest('.filter');
+    if (!b) return;
+    if (state.mode === 'restaurants') {
+      state.filter = b.dataset.filter;
+    } else {
+      state.parksFilter = b.dataset.filter;
+    }
+    renderFilters();
+    renderList();
+  });
+
+  $('#list').addEventListener('click', (e) => {
+    const c = e.target.closest('.card');
+    if (!c) return;
+    if (c.dataset.type === 'park' || state.mode === 'parks') {
+      openPark(c.dataset.id);
+    } else {
+      openRestaurant(c.dataset.id);
+    }
+  });
+
+  $('#list').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') {
+      const c = e.target.closest('.card');
+      if (!c) return;
+      if (c.dataset.type === 'park' || state.mode === 'parks') {
+        openPark(c.dataset.id);
+      } else {
+        openRestaurant(c.dataset.id);
+      }
+    }
+  });
+
+  $('#btn-mode-restaurants')?.addEventListener('click', () => setMode('restaurants'));
+  $('#btn-mode-parks')?.addEventListener('click', () => setMode('parks'));
+  $('#btn-top-parks')?.addEventListener('click', () => showView('parks'));
+
   $('#drawer-close').addEventListener('click', closeDrawer);
   $('#drawer-backdrop').addEventListener('click', closeDrawer);
   $('#btn-my-res').addEventListener('click', openMyReservations);
@@ -697,6 +986,7 @@
     map.flyTo(CFG.center, 15);
     toast('📍 Roșiorii de Vede · Hartă centrată ☩');
   });
+
   const sideFooter = $('#sidebar-footer');
   if (sideFooter) {
     sideFooter.addEventListener('click', openAppMenu);
@@ -710,15 +1000,21 @@
       state.userPos = [p.coords.latitude, p.coords.longitude];
       if (state.userMarker) state.userMarker.setLatLng(state.userPos);
       else state.userMarker = L.marker(state.userPos, { icon: L.divIcon({ className: '', html: '<div class="user-dot"></div>', iconSize: [18, 18] }) }).addTo(map);
-      map.flyTo(state.userPos, 16); renderList(); toast('Sortat după distanță 📍');
+      map.flyTo(state.userPos, 16);
+      renderList();
+      renderParksSubmenu();
+      toast('Sortat după distanță 📍');
     }, () => toast('Nu am putut obține locația', true), { enableHighAccuracy: true, timeout: 10000 });
   });
 
   // Mobile bottom sheet: tap/drag the handle to cycle sizes.
-  const sheet = $('#sidebar'); const handle = $('#sheet-handle');
+  const sheet = $('#sidebar');
+  const handle = $('#sheet-handle');
   const setSheet = (mode) => {
-    sheet.classList.toggle('expanded', mode === 'expanded'); sheet.classList.toggle('collapsed', mode === 'collapsed');
-    document.body.classList.toggle('sheet-expanded', mode === 'expanded'); document.body.classList.toggle('sheet-collapsed', mode === 'collapsed');
+    sheet.classList.toggle('expanded', mode === 'expanded');
+    sheet.classList.toggle('collapsed', mode === 'collapsed');
+    document.body.classList.toggle('sheet-expanded', mode === 'expanded');
+    document.body.classList.toggle('sheet-collapsed', mode === 'collapsed');
     setTimeout(() => map.invalidateSize(), 320);
   };
   let startY = null;
@@ -732,23 +1028,145 @@
   });
   $('#search').addEventListener('focus', () => { if (innerWidth <= 760) setSheet('expanded'); });
 
+  /* ---------------- Parks Submenu Rendering & Events ---------------- */
+  function renderParksSubmenu() {
+    const filtersWrap = $('#parks-filters');
+    if (filtersWrap) {
+      filtersWrap.innerHTML = Object.entries(PARK_TYPES)
+        .map(([k, v]) => `<button class="park-filter-btn${state.submenuFilter === k ? ' active' : ''}" data-cat="${k}" type="button">${k === 'all' ? '✨ ' : PARK_EMOJI[k] + ' '}${v}</button>`)
+        .join('');
+    }
+
+    const norm = (s) => String(s || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const q = norm(state.submenuQuery);
+    let list = state.parks;
+    if (state.submenuFilter !== 'all') {
+      list = list.filter((p) => p.category === state.submenuFilter);
+    }
+    if (q) {
+      list = list.filter((p) =>
+        norm(p.name).includes(q) ||
+        norm(p.categoryLabel).includes(q) ||
+        norm(p.description).includes(q) ||
+        norm(p.history).includes(q) ||
+        norm(p.address).includes(q) ||
+        (p.highlights || []).some((h) => norm(h).includes(q)) ||
+        (p.features || []).some((f) => norm(f).includes(q))
+      );
+    }
+    if (state.userPos) {
+      list = [...list].sort((a, b) => distanceKm(state.userPos, [a.lat, a.lng]) - distanceKm(state.userPos, [b.lat, b.lng]));
+    }
+
+    const grid = $('#parks-grid');
+    if (!grid) return;
+    if (!list.length) {
+      grid.innerHTML = `<div class="empty-card glass" style="grid-column: 1 / -1; padding: 30px;">
+        <p class="empty-desc">Nicio zonă verde găsită pentru căutarea selectată. 🔍</p>
+      </div>`;
+      return;
+    }
+
+    grid.innerHTML = list.map((p, i) => {
+      const dist = state.userPos ? `<span>📍 ${distanceKm(state.userPos, [p.lat, p.lng]).toFixed(1)} km</span>` : '';
+      return `
+        <article class="park-card" data-id="${p.id}" id="park-card-${p.id}" style="animation: rise 0.28s ease ${Math.min(i * 35, 250)}ms both">
+          <div class="park-card-header">
+            <div class="park-card-icon">${p.emoji || PARK_EMOJI[p.category] || '🌳'}</div>
+            <div class="park-card-title-wrap">
+              <div class="park-card-badge-row">
+                <span class="park-badge">${esc(p.badge || p.categoryLabel)}</span>
+                <span class="park-category-tag">${esc(p.categoryLabel)}</span>
+              </div>
+              <h3 class="park-card-title">${esc(p.name)}</h3>
+            </div>
+          </div>
+          <p class="park-card-desc">${esc(p.description)}</p>
+
+          <div class="park-meta-info">
+            <div class="park-meta-item">📍 <span>${esc(p.address)}</span> ${dist ? `<strong>(${dist})</strong>` : ''}</div>
+            <div class="park-meta-item">⏰ <strong>Program:</strong> <span>${esc(p.schedule)}</span></div>
+            <div class="park-meta-item">🎟️ <strong>Acces:</strong> <span>${esc(p.admission)}</span></div>
+          </div>
+
+          <div class="park-highlights-box">
+            <div class="park-highlights-title">Atracții & Repere</div>
+            <div class="park-highlights-tags">
+              ${(p.highlights || []).slice(0, 3).map((h) => `<span class="park-highlight-chip">✦ ${esc(h)}</span>`).join('')}
+            </div>
+          </div>
+
+          <div class="park-history-collapsible" id="collapsible-${p.id}">
+            <button class="park-history-btn" type="button" aria-expanded="false" data-target="collapsible-${p.id}">
+              <span>📖 Istoric & Semnificație Tradițională</span>
+              <span class="park-history-arrow">▼</span>
+            </button>
+            <div class="park-history-content">
+              ${esc(p.history)}
+            </div>
+          </div>
+
+          <div class="park-card-actions">
+            <button class="btn primary btn-park-map" data-id="${p.id}" type="button">🗺️ Vezi pe Hartă</button>
+            <button class="btn btn-park-gps" data-lat="${p.lat}" data-lng="${p.lng}" data-name="${esc(p.name)}" type="button">🧭 Traseu</button>
+            <button class="btn btn-park-share-card" data-id="${p.id}" data-name="${esc(p.name)}" type="button">🔗 Distribuie</button>
+          </div>
+        </article>
+      `;
+    }).join('');
+  }
+
+  $('#parks-search')?.addEventListener('input', (e) => {
+    state.submenuQuery = e.target.value;
+    renderParksSubmenu();
+  });
+
+  $('#parks-filters')?.addEventListener('click', (e) => {
+    const btn = e.target.closest('.park-filter-btn');
+    if (!btn) return;
+    state.submenuFilter = btn.dataset.cat;
+    renderParksSubmenu();
+  });
+
+  $('#parks-grid')?.addEventListener('click', (e) => {
+    const histBtn = e.target.closest('.park-history-btn');
+    if (histBtn) {
+      const container = document.getElementById(histBtn.dataset.target);
+      if (container) {
+        const isOpen = container.classList.toggle('open');
+        histBtn.setAttribute('aria-expanded', isOpen);
+      }
+      return;
+    }
+    const mapBtn = e.target.closest('.btn-park-map');
+    if (mapBtn) {
+      showView('map', mapBtn.dataset.id, 'parks');
+      return;
+    }
+    const gpsBtn = e.target.closest('.btn-park-gps');
+    if (gpsBtn) {
+      bridge.navigate(parseFloat(gpsBtn.dataset.lat), parseFloat(gpsBtn.dataset.lng), gpsBtn.dataset.name);
+      return;
+    }
+    const shareBtn = e.target.closest('.btn-park-share-card');
+    if (shareBtn) {
+      const p = state.parks.find((x) => x.id === shareBtn.dataset.id);
+      if (p) {
+        bridge.share(
+          `${p.name} – Roșiori Map`,
+          `Explorează ${p.name} din Roșiorii de Vede pe Roșiori Map! Istoric, facilități și traseu GPS.`,
+          location.origin + location.pathname + '#park-' + p.id
+        );
+      }
+      return;
+    }
+  });
+
+  $('#btn-parks-back')?.addEventListener('click', () => showView('menu'));
+  $('#btn-parks-open-map')?.addEventListener('click', () => showView('map', null, 'parks'));
+
   /* ---------------- City Portal & View Management ---------------- */
   const BLANK_SECTIONS = {
-    parks: {
-      title: 'Parcuri & Zone Verzi',
-      navTitle: 'Parcuri & Zone Verzi',
-      desc: 'Parcul Central, alei de promenadă, zone de relaxare în aer liber, foișoare și locuri de joacă pentru familii din Roșiorii de Vede.',
-      bgClass: 'bg-emerald',
-      iconSvg: `<svg viewBox="0 0 24 24" width="44" height="44" fill="currentColor">
-        <path d="M12 2C9.24 2 7 4.24 7 7c0 .64.12 1.25.35 1.82C5.4 9.55 4 11.61 4 14c0 3.31 2.69 6 6 6h1v2h2v-2h1c3.31 0 6-2.69 6-6 0-2.39-1.4-4.45-3.35-5.18.23-.57.35-1.18.35-1.82 0-2.76-2.24-5-5-5zm0 2c1.66 0 3 1.34 3 3 0 .42-.09.82-.24 1.18l-.48 1.15 1.18.42C17.06 10.33 18 12.06 18 14c0 2.21-1.79 4-4 4h-4c-2.21 0-4-1.79-4-4 0-1.94.94-3.67 2.54-4.25l1.18-.42-.48-1.15C9.09 7.82 9 7.42 9 7c0-1.66 1.34-3 3-3z"/>
-      </svg>`,
-      items: [
-        'Parcul Central Municipal și foișoarele de promenadă',
-        'Locuri de joacă amenajate pentru copii și preșcolari',
-        'Zone de fitness în aer liber și bănci de relaxare',
-        'Spații verzi cartografiate și puncte de odihnă'
-      ]
-    },
     history: {
       title: 'Istorie & Patrimoniu',
       navTitle: 'Istorie & Patrimoniu',
@@ -799,34 +1217,62 @@
   let currentView = 'menu';
   const viewMainMenu = $('#view-main-menu');
   const viewMapApp = $('#view-map-app');
+  const viewParksSubmenu = $('#view-parks-submenu');
   const viewEmptySection = $('#view-empty-section');
 
-  function showView(view, param = null) {
+  function showView(view, param = null, mode = null) {
     currentView = view;
     if (view === 'menu') {
       if (viewMainMenu) viewMainMenu.hidden = false;
       if (viewMapApp) viewMapApp.hidden = true;
+      if (viewParksSubmenu) viewParksSubmenu.hidden = true;
       if (viewEmptySection) viewEmptySection.hidden = true;
       if (viewMainMenu) viewMainMenu.scrollTop = 0;
       history.replaceState(null, '', '#menu');
+    } else if (view === 'parks') {
+      if (viewMainMenu) viewMainMenu.hidden = true;
+      if (viewMapApp) viewMapApp.hidden = true;
+      if (viewEmptySection) viewEmptySection.hidden = true;
+      if (viewParksSubmenu) {
+        viewParksSubmenu.hidden = false;
+        viewParksSubmenu.scrollTop = 0;
+      }
+      renderParksSubmenu();
+      history.replaceState(null, '', '#parks');
     } else if (view === 'map') {
       if (viewMainMenu) viewMainMenu.hidden = true;
-      if (viewMapApp) viewMapApp.hidden = false;
+      if (viewParksSubmenu) viewParksSubmenu.hidden = true;
       if (viewEmptySection) viewEmptySection.hidden = true;
+      if (viewMapApp) viewMapApp.hidden = false;
       setTimeout(() => {
         map.invalidateSize();
       }, 80);
-      if (param) openRestaurant(param);
-      history.replaceState(null, '', param ? `#${param}` : '#map');
+
+      const targetMode = mode || (param?.startsWith('park-') || state.parks.some((p) => p.id === param) ? 'parks' : 'restaurants');
+      setMode(targetMode);
+
+      if (param) {
+        const parkId = param.replace(/^park-/, '');
+        if (state.parks.some((p) => p.id === parkId)) {
+          setMode('parks');
+          openPark(parkId);
+        } else if (state.restaurants.some((r) => r.id === param)) {
+          setMode('restaurants');
+          openRestaurant(param);
+        }
+      } else {
+        history.replaceState(null, '', '#map');
+      }
     } else if (view === 'section') {
-      const data = BLANK_SECTIONS[param] || BLANK_SECTIONS.parks;
+      const data = BLANK_SECTIONS[param] || BLANK_SECTIONS.history;
       if (viewMainMenu) viewMainMenu.hidden = true;
       if (viewMapApp) viewMapApp.hidden = true;
+      if (viewParksSubmenu) viewParksSubmenu.hidden = true;
       if (viewEmptySection) {
         viewEmptySection.hidden = false;
         viewEmptySection.scrollTop = 0;
       }
-      
+
       const navTitle = $('#empty-section-nav-title');
       const title = $('#empty-section-title');
       const desc = $('#empty-section-desc');
@@ -841,24 +1287,26 @@
         iconWrap.innerHTML = data.iconSvg;
       }
       if (listEl) {
-        listEl.innerHTML = data.items.map(it => `<li>${it}</li>`).join('');
+        listEl.innerHTML = data.items.map((it) => `<li>${it}</li>`).join('');
       }
       history.replaceState(null, '', `#${param}`);
     }
   }
+  window.showView = showView;
 
   // Main menu card actions
-  $('#card-action-restaurants')?.addEventListener('click', () => showView('map'));
-  $('#card-action-parks')?.addEventListener('click', () => showView('section', 'parks'));
+  $('#card-action-restaurants')?.addEventListener('click', () => showView('map', null, 'restaurants'));
+  $('#card-action-parks')?.addEventListener('click', () => showView('parks'));
   $('#card-action-history')?.addEventListener('click', () => showView('section', 'history'));
   $('#card-action-culture')?.addEventListener('click', () => showView('section', 'culture'));
   $('#card-action-schools')?.addEventListener('click', () => showView('section', 'schools'));
 
-  ['restaurants', 'parks', 'history', 'culture', 'schools'].forEach(id => {
+  ['restaurants', 'parks', 'history', 'culture', 'schools'].forEach((id) => {
     $(`#card-action-${id}`)?.addEventListener('keydown', (e) => {
       if (e.key === 'Enter' || e.key === ' ') {
         e.preventDefault();
-        if (id === 'restaurants') showView('map');
+        if (id === 'restaurants') showView('map', null, 'restaurants');
+        else if (id === 'parks') showView('parks');
         else showView('section', id);
       }
     });
@@ -889,6 +1337,7 @@
     }
     return false;
   };
+
   window.addEventListener('popstate', () => {
     if (modal.open) closeModal();
     else if ($('#drawer').classList.contains('open')) closeDrawer();
@@ -899,21 +1348,35 @@
 
   (async () => {
     try {
-      state.restaurants = await api.restaurants();
-      renderFilters(); renderList();
+      const [restaurants, parks] = await Promise.all([
+        api.restaurants(),
+        api.parks()
+      ]);
+      state.restaurants = restaurants;
+      state.parks = parks;
+      renderFilters();
+      renderList();
+      renderParksSubmenu();
+
       const hash = location.hash.slice(1);
       if (hash === 'map') {
         showView('map');
-      } else if (['parks', 'history', 'culture', 'schools'].includes(hash)) {
+      } else if (hash === 'parks') {
+        showView('parks');
+      } else if (hash.startsWith('park-')) {
+        showView('map', hash.replace(/^park-/, ''), 'parks');
+      } else if (['history', 'culture', 'schools'].includes(hash)) {
         showView('section', hash);
-      } else if (hash && state.restaurants.some(r => r.id === hash)) {
-        showView('map', hash);
+      } else if (hash && state.restaurants.some((r) => r.id === hash)) {
+        showView('map', hash, 'restaurants');
+      } else if (hash && state.parks.some((p) => p.id === hash)) {
+        showView('map', hash, 'parks');
       } else {
         showView('menu');
       }
     } catch (e) {
       console.error(e);
-      toast('Nu am putut încărca restaurantele', true);
+      toast('Nu am putut încărca datele', true);
       showView('menu');
     }
   })();
