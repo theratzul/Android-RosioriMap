@@ -1,0 +1,242 @@
+[
+  {
+    "id": "parcul-central",
+    "name": "Parcul Central Municipal (Nicolae Popescu-Vedea)",
+    "category": "parc",
+    "categoryLabel": "Parc Municipal",
+    "emoji": "🌳",
+    "badge": "Inima Verde a Orașului",
+    "address": "Strada Dunării / Centru, Roșiorii de Vede",
+    "lat": 44.1106,
+    "lng": 24.9952,
+    "admission": "Acces gratuit",
+    "schedule": "Deschis permanent (24/7)",
+    "description": "Principalul parc și spațiu de promenadă din inima municipiului Roșiorii de Vede, cu alei de tei seculari, foișor de muzică, fântână arteziană și locuri de relaxare.",
+    "history": "Amenajat la cumpăna dintre secolele XIX și XX ca Grădină Publică a orașului, parcul poartă cu mândrie numele distinsului avocat și om de cultură Nicolae Popescu-Vedea, o personalitate marcantă a comunității teleormănene. De-a lungul deceniilor, Parcul Central a fost epicentrul vieții sociale și culturale din Roșiorii de Vede: duminicile interbelice aduceau aici acordurile fanfarei militare în foișorul din centrul parcului, în timp ce elitele vremii și familiile de orășeni se plimbau pe sub teii și castanii parfumați. Modernizat în ultimii ani prin ample proiecte de regenerare urbană ecologică („Natură urbană. Oxigen pentru Roșiori de Vede”), parcul păstrează farmecul aristocratic al vremurilor trecute, completat cu facilități moderne: locuri de joacă sigure pentru copii, bănci confortabile, iluminat arhitectural nocturn și spații florale atent îngrijite.",
+    "highlights": [
+      "Foișorul istoric de muzică și promenadă",
+      "Aleea centrală străjuită de tei și castani seculari",
+      "Fântâna arteziană și zonele cu aranjamente florale",
+      "Loc de joacă modernizat pentru copii și preșcolari",
+      "Bănci umbroase și iluminat pietonal ambiental"
+    ],
+    "features": [
+      "Alei de promenadă",
+      "Foișor istoric",
+      "Loc de joacă copii",
+      "Zonă florală",
+      "Bănci & umbră",
+      "Acces pietonal facil"
+    ]
+  },
+  {
+    "id": "padurea-rosiori",
+    "name": "Pădurea Roșiori & Vedea (Fața Verde)",
+    "category": "padure",
+    "categoryLabel": "Pădure & Natură",
+    "emoji": "🌲",
+    "badge": "Plămânul Verde al Municipiului",
+    "address": "Lunca Râului Vedea, DJ 612A / Zona Est, Roșiorii de Vede",
+    "lat": 44.1078,
+    "lng": 25.0275,
+    "admission": "Acces liber în natură",
+    "schedule": "Acces permanent",
+    "description": "Sanctuarul natural și pădurea seculară de luncă a orașului Roșiori, întinsă pe malurile râului Vedea, un loc preferat pentru drumeții, picnic și recreere curată.",
+    "history": "Pădurea Vedea reprezintă o rămășiță nobilă a vechilor Codri ai Teleormanului, ce acopereau odinioară câmpiile mănoase ale Țării Românești. Întinsă de-a lungul meandrelor râului Vedea la estul municipiului, pădurea a fost martora evoluției multiseculare a târgului Ruși de Vede încă din epoca domnitorilor Radu I (1385), Mircea cel Bătrân și Mihai Viteazul. În secolele XIX și XX, pădurea constituia destinația de neînlocuit a orășenilor pentru serbările câmpenești de 1 Mai, Rusaliile și ieșirile duminicale la iarbă verde. Astăzi, zona adăpostește complexul turistic „Fața Verde – La Pădure”, oază de liniște cu stejari seculari, frasini, sălcii și plopi argintii, oferind un refugiu veritabil împotriva căldurii verii de Bărăgan.",
+    "highlights": [
+      "Arbori seculari de luncă (stejar, frasin, salcie și plop)",
+      "Trasee naturale de promenadă și alergare în aer curat",
+      "Poienițe destinate picnicului și relaxării de weekend",
+      "Complexul rustic Fața Verde cu terasă și facilități de cazare",
+      "Observarea păsărilor și faunei acvatice din lunca Vedei"
+    ],
+    "features": [
+      "Natură sălbatică",
+      "Trasee drumeție",
+      "Zonă picnic",
+      "Arbori seculari",
+      "Malul râului Vedea",
+      "Aer curat"
+    ]
+  },
+  {
+    "id": "baza-agrement-vedea",
+    "name": "Baza de Agrement Vedea & Parcul Sportiv",
+    "category": "agrement",
+    "categoryLabel": "Zonă de Agrement",
+    "emoji": "⚽",
+    "badge": "Sport & Mișcare în Aer Liber",
+    "address": "Strada Vedea / Parcul de Vest, Roșiorii de Vede",
+    "lat": 44.1188,
+    "lng": 24.976,
+    "admission": "Acces liber / Închirieri terenuri",
+    "schedule": "Zilnic: 07:00 - 23:00",
+    "description": "Complex integrat pentru sport și timp liber pe malul apei: terenuri sintetice de fotbal și tenis, alei de jogging și echipamente moderne de fitness urban.",
+    "history": "Dezvoltată inițial în anii 1970 în lunca vestică a râului Vedea, Baza de Agrement a fost proiectată ca un centru modern de recreere sportivă și civică pentru locuitorii din Roșiorii de Vede. Aici se organizau campionatele locale de fotbal, crosurile școlare municipale și întrecerile de tenis care au inspirat generații de sportivi teleormăneni. În perioada recentă, amplasamentul a beneficiat de investiții susținute în terenuri sintetice nocturne, gazon modern, bănci și aparate de calistenică, devenind polul principal de energie și sănătate al comunității tinere.",
+    "highlights": [
+      "Terenuri de minifotbal cu nocturnă și gazon sintetic",
+      "Terenuri de tenis de câmp și spații de antrenament",
+      "Zonă de fitness în aer liber (workout & calisthenics)",
+      "Faleză pietonală de promenadă de-a lungul albiei Vedei",
+      "Spații verzi umbroase și bănci de relaxare"
+    ],
+    "features": [
+      "Teren sintetic",
+      "Iluminat nocturnă",
+      "Fitness urban",
+      "Vestiare",
+      "Faleză pe râu",
+      "Parcare"
+    ]
+  },
+  {
+    "id": "strandul-municipal",
+    "name": "Ștrandul Municipal Roșiorii de Vede",
+    "category": "strand",
+    "categoryLabel": "Ștrand & Natație",
+    "emoji": "🏊",
+    "badge": "Răcoare & Natație Estivală",
+    "address": "Zona Parcului Nicolae Bălcescu / Lunca Vedea, Roșiorii de Vede",
+    "lat": 44.1215,
+    "lng": 24.9772,
+    "admission": "Bilet intrare / Sezonier",
+    "schedule": "Sezon estival (Iunie – Septembrie): 09:00 - 20:00",
+    "description": "Locul tradițional de bălăceală și relaxare estivală al roșiorenilor, dotat cu bazin de înot pentru adulți și copii, plajă cu șezlonguri și terasă cu răcoritoare.",
+    "history": "Ștrandul Municipal din Roșiorii de Vede are o istorie de peste jumătate de veac, fiind realizat în cadrul complexului de agrement din Parcul Nicolae Bălcescu pentru a oferi orășenilor o oază de răcoare în timpul verilor călduroase din Câmpia Română. În deceniile trecute, ștrandul era cel mai aglomerat punct de întâlnire al adolescenților și familiilor, cu bazine animate, plajă cu nisip fin și competiții de natație. De-a lungul vremii, spațiul a intrat în atenția proiectelor de reabilitare municipală și parteneriatelor de agrement estival, reprezentând un punct de reper de neuitat în memoria orașului.",
+    "highlights": [
+      "Bazin de înot de mari dimensiuni pentru adulți",
+      "Bazin special amenajat pentru siguranța copiilor",
+      "Zonă amenajată de plajă cu șezlonguri și umbrele",
+      "Terasă estivală cu sucuri, înghețată și gustări reci",
+      "Dușuri, cabine de schimb și asistență salvamar în sezon"
+    ],
+    "features": [
+      "Bazin adulți",
+      "Bazin copii",
+      "Șezlonguri & umbrele",
+      "Terasă de vară",
+      "Vestiare & dușuri",
+      "Salvamar"
+    ]
+  },
+  {
+    "id": "balciul-rosiori",
+    "name": "Bâlciul Anual Tradițional (Târgul Săptămânal / Obor)",
+    "category": "balci",
+    "categoryLabel": "Tradiție & Bâlci",
+    "emoji": "🎡",
+    "badge": "Tradiție Seculară (din 1385)",
+    "address": "DJ 612A / Strada Târgului (Obor), Roșiorii de Vede",
+    "lat": 44.114005,
+    "lng": 25.003032,
+    "admission": "Intrare liberă",
+    "schedule": "1 – 8 Septembrie anual (Târg săptămânal: în fiecare Vineri)",
+    "description": "Cel mai vestit și mai mare bâlci tradițional din județul Teleorman și din sudul țării, cu o istorie de secole, carusele spectaculoase, mici la grătar și meșteșugari.",
+    "history": "Bâlciul de la Roșiorii de Vede își trage seva din străvechiul târg medieval atestat documentar încă din 1385 în actele voievodale ale Țării Românești. În a doua jumătate a secolului al XVII-lea, târgul era considerat de domnitori la fel de însemnat și de frecventat ca cel din București. Domnitorul Constantin Brâncoveanu a emis în 1695 o celebră „Carte de pârcălăbie de la Rușii de Vede” care consfințea privilegiile de vamă ale târgului și protecția negustorilor, meșteșugarilor și boierilor veniți din tot regatul. Din anul 1934, data de desfășurare a bâlciului a fost stabilită oficial între 1 și 8 septembrie, culminând de sărbătoarea Nașterii Maicii Domnului (Sfânta Maria Mică). Din cauza inundațiilor râului Vedea, vatra bâlciului a fost mutată la începutul secolului XX pe amplasamentul Oborului comunal, unde dăinuie și astăzi. Cu aromă de mititei rumeniți pe cărbuni, turtă dulce artizanală, scrâncioburi, mașinuțe electrice și meșteșugari olari, bâlciul continuă să adune an de an zeci de mii de vizitatori din tot Teleormanul.",
+    "highlights": [
+      "Parcul de distracții cu tiribombe, mașinuțe tamponabile și roată panoramică",
+      "Grătarele tradiționale cu vestiții mici suculenți, pastramă și bere rece",
+      "Aleea meșteșugarilor olari, dogari și artizani populari din toată țara",
+      "Tarabele cu turtă dulce pictată manual, acadele și vată de zahăr",
+      "Târgul săptămânal de produse agricole, unelte și mărfuri tradiționale (vinerea)"
+    ],
+    "features": [
+      "Eveniment tradițional",
+      "Parc de distracții",
+      "Gastronomie tradițională",
+      "Meșteșugari olari",
+      "Târg produse locale",
+      "Parcare generoasă"
+    ]
+  },
+  {
+    "id": "parcul-balcescu",
+    "name": "Parcul Nicolae Bălcescu & Teatrul de Vară",
+    "category": "parc",
+    "categoryLabel": "Parc Municipal",
+    "emoji": "🌳",
+    "badge": "Cultură & Natură",
+    "address": "Strada Nicolae Bălcescu / Lunca Vedea, Roșiorii de Vede",
+    "lat": 44.1208,
+    "lng": 24.9783,
+    "admission": "Acces gratuit",
+    "schedule": "Deschis permanent (24/7)",
+    "description": "Parc generos amplasat în vestul orașului, cu arbori înalți, Teatrul de Vară în aer liber, bustul monumental al lui Nicolae Bălcescu și alei liniștite.",
+    "history": "Creat în a doua jumătate a secolului XX ca un parc de agrement și cultură, Parcul Nicolae Bălcescu a fost gândit ca un spațiu nobil de destindere în imediata vecinătate a luncii Vedei. Punctul de atracție istoric a fost Teatrul de Vară, o arenă amfiteatrică în aer liber care găzduia festivalurile de muzică populară, galele de teatru și proiecțiile de film de vară. Monumentul central este bustul marelui cărturar și revoluționar Nicolae Bălcescu, ce veghează aleile străjuite de nuci, castani și mesteceni, făcând din acest parc un simbol al demnității culturale roșiorene.",
+    "highlights": [
+      "Bustul monumental al marelui patriot Nicolae Bălcescu",
+      "Teatrul de Vară – scena spectacolelor în aer liber",
+      "Alei largi și umbroase pentru promenadă și recreere",
+      "Loc de joacă amenajat pentru copii",
+      "Acces direct către zona ștrandului și lunca râului Vedea"
+    ],
+    "features": [
+      "Monument istoric",
+      "Teatru de vară",
+      "Alei promenadă",
+      "Loc de joacă",
+      "Zone umbroase",
+      "Vegetație bogată"
+    ]
+  },
+  {
+    "id": "parcul-garii-nord",
+    "name": "Parcul Gării Roșiori Nord (Parcul C.F.R.)",
+    "category": "parc",
+    "categoryLabel": "Parc Istoric",
+    "emoji": "🚂",
+    "badge": "Epoca de Aur Feroviară",
+    "address": "Strada Gării, Roșiori Nord, Roșiorii de Vede",
+    "lat": 44.123,
+    "lng": 24.98,
+    "admission": "Acces gratuit",
+    "schedule": "Deschis permanent (24/7)",
+    "description": "Parc istoric amenajat în epoca apariției marii magistrale feroviare, oferind oaze de verdeață, arbori maturi și o atmosferă nostalgică la nodul feroviar Roșiori Nord.",
+    "history": "Inaugurarea în anul 1895 a marii linii de cale ferată a transformat municipiul Roșiorii de Vede într-un nod feroviar de importanță strategică națională. Inginerii și mai-marii căilor ferate au dispus amenajarea unui parc somptuos chiar în fața gării Roșiori Nord, menit să întâmpine demnitarii, călătorii și familiile de ceferiști cu o perdea de verdeață binefăcătoare împotriva fumului locomotivelor cu abur. Cu platani, salcâmi și bănci masive din fontă, Parcul C.F.R. a rămas în memoria generațiilor ca locul despărțirilor și revederilor emoționante din gara orașului.",
+    "highlights": [
+      "Vegetație matură de platani și castani ornamentali",
+      "Perspectivă panoramică asupra clădirii istorice a Gării Roșiori Nord",
+      "Alei pietonale pentru relaxarea călătorilor și riveranilor",
+      "Bănci confortabile la umbra arborilor seculari",
+      "Conexiune rapidă cu transportul public municipal"
+    ],
+    "features": [
+      "Parc istoric feroviar",
+      "Arbori maturi",
+      "Bănci de odihnă",
+      "Aproape de Gara Nord",
+      "Acces permanent",
+      "Ambianță liniștită"
+    ]
+  },
+  {
+    "id": "parcul-sfanta-vineri",
+    "name": "Parcul Tineretului – Sfânta Vineri",
+    "category": "parc",
+    "categoryLabel": "Parc de Cartier",
+    "emoji": "🌸",
+    "badge": "Comunitar & Familie",
+    "address": "Zona Bisericii Sfânta Vineri, Roșiorii de Vede",
+    "lat": 44.1095,
+    "lng": 24.996,
+    "admission": "Acces gratuit",
+    "schedule": "Deschis permanent (24/7)",
+    "description": "Spațiu verde cochet și primitor din inima cartierului, ideal pentru plimbările zilnice ale familiilor, cu loc de joacă modernizat și multă liniște.",
+    "history": "Amenajat în vatra vechiului cartier dezvoltat în jurul istoricei biserici Sfânta Vineri, parcul a răspuns dorinței locuitorilor de a avea un colț de natură chiar lângă căminele lor. Cu sprijinul comunității, spațiul a fost împodobit cu arbuști decorativi, ronduri de flori și un loc de joacă dotat cu suprafață antitraumă. Este astăzi un exemplu cald de coeziune de cartier și relaxare cotidiană.",
+    "highlights": [
+      "Loc de joacă complet utilat pentru copii mici și școlari",
+      "Ronduri florale multicolore și bănci îngrijite",
+      "Arbori ornamentali ce oferă răcoare vara",
+      "Mediu sigur și liniștit, ferit de traficul rutier intens",
+      "Proximitate față de reperele spirituale ale zonei"
+    ],
+    "features": [
+      "Loc de joacă sigur",
+      "Ronduri florale",
+      "Bănci confortabile",
+      "Cartier liniștit",
+      "Acces cărucioare",
+      "Spațiu familial"
+    ]
+  }
+]

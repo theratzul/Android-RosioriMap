@@ -78,11 +78,11 @@
           <div class="card-content">
             <div class="card-header-row">
               <h2 class="card-title">Parcuri & Zone Verzi</h2>
-              <span class="badge-pill badge-soon">În curând</span>
+              <span class="badge-pill badge-live">● Activ</span>
             </div>
-            <p class="card-desc">Parcul Central, alei de promenadă, zone de relaxare în aer liber, foișoare și locuri de joacă pentru familii.</p>
+            <p class="card-desc">Parcul Central, Pădurea Roșiori, Baza de agrement Vedea, Ștrandul Municipal, Bâlciul Tradițional (din 1385) și istoric detaliat.</p>
             <div class="card-footer-row">
-              <span class="card-action-hint">Detalii secțiune</span>
+              <span class="card-action-hint">Deschide submeniul</span>
               <span class="card-arrow">→</span>
             </div>
           </div>
@@ -159,7 +159,85 @@
     </div>
   </section>
 
-  <!-- ==================== 2. EMPTY / BLANK SECTION VIEW ==================== -->
+  <!-- ==================== 2. PARKS & GREEN AREAS SUBMENU ==================== -->
+  <section id="view-parks-submenu" class="parks-submenu-view" hidden>
+    <div class="parks-container">
+      <header class="parks-nav glass">
+        <button id="btn-parks-back" class="chip" type="button" aria-label="Înapoi la Meniu Principal">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+          <span>Meniu Principal</span>
+        </button>
+        <div class="parks-nav-title">
+          <span class="parks-nav-badge">Natură & Agrement</span>
+          <h2 class="parks-nav-heading">Parcuri & Zone Verzi</h2>
+        </div>
+        <button id="btn-parks-open-map" class="chip chip-accent" type="button" title="Vezi pe Hartă">
+          <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M20.5 3l-.16.03L15 5.1 9 3 3.36 4.9c-.21.07-.36.25-.36.48V20.5c0 .28.22.5.5.5l.16-.03L9 18.9l6 2.1 5.64-1.9c.21-.07.36-.25.36-.48V3.5c0-.28-.22-.5-.5-.5zM15 19l-6-2.11V5l6 2.11V19z"/></svg>
+          <span>Harta Verde 🗺️</span>
+        </button>
+      </header>
+
+      <div class="parks-hero glass">
+        <div class="parks-hero-content">
+          <span class="menu-eyebrow">Patrimoniu Natural & Tradiții Urbane</span>
+          <h1 class="parks-hero-title">Parcuri, Pădurea Roșiori & Agrement</h1>
+          <p class="parks-hero-desc">Explorează spațiile verzi din municipiu: aleile parfumate ale Parcului Central, pădurea seculară Vedea (Fața Verde), baza sportivă de agrement, ștrandul municipal estival și vestitul Bâlci anual cu rădăcini din 1385.</p>
+          <div class="parks-hero-stats">
+            <span class="stat-pill">🌳 8 Zone Cartografiate</span>
+            <span class="stat-pill">🌲 Pădurea Vedea (Codrii Teleormanului)</span>
+            <span class="stat-pill">🏊 Bazine & Agrement</span>
+            <span class="stat-pill">🎡 Bâlci Secular (1385 – prezent)</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Controls: search & filters -->
+      <div class="parks-controls glass">
+        <div class="parks-search-wrap">
+          <svg viewBox="0 0 24 24" width="18" height="18" class="search-ico"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"/></svg>
+          <input id="parks-search" type="search" placeholder="Caută parc, pădure, ștrand, bâlci, facilități sau istoric..." autocomplete="off" />
+        </div>
+        <div class="parks-filters" id="parks-filters" role="tablist"></div>
+      </div>
+
+      <!-- Parks Grid -->
+      <div class="parks-grid" id="parks-grid"></div>
+
+      <!-- Historical Chronicle Section -->
+      <section class="parks-history-section glass">
+        <div class="section-header-row">
+          <div class="sacred-monogram">☩</div>
+          <div>
+            <h3 class="section-heading">Cronica Istorică a Zonelor Verzi & Tradițiilor</h3>
+            <p class="section-subheading">Memoria vie a târgului Ruși de Vede, codrii multiseculari și reperele comunității</p>
+          </div>
+        </div>
+        <div class="history-cards-grid">
+          <article class="history-card">
+            <div class="history-badge">Documentat 1385 & Hrisov 1695</div>
+            <h4>Bâlciul Anual & Târgul de la Rușii de Vede</h4>
+            <p>Tradiția bâlciului coboară în vremea primei atestări a târgului (1385). În secolul al XVII-lea era comparat ca faimă cu târgul Bucureștilor, fiind consfințit prin Hrisovul domnesc dat de Constantin Brâncoveanu în 1695. Din 1934 este fixat de Sfânta Maria Mică (1–8 septembrie), devenind cel mai mare bâlci din sudul țării.</p>
+          </article>
+          <article class="history-card">
+            <div class="history-badge">Ecologie & Memorie</div>
+            <h4>Pădurea Vedea – Moștenirea Vechilor Codri</h4>
+            <p>Pădurea de luncă întinsă de-a lungul râului Vedea este o relicvă a marilor Codri ai Teleormanului. Destinație favorită a roșiorenilor pentru serbările de 1 Mai și Rusalii, pădurea găzduiește stejari seculari, frasini și un habitat natural deosebit protejat pentru viitorime.</p>
+          </article>
+          <article class="history-card">
+            <div class="history-badge">Urbanism Secolul XIX-XX</div>
+            <h4>Grădina Publică & Parcurile Municipale</h4>
+            <p>Parcul Central „Nicolae Popescu-Vedea” și Parcul „Nicolae Bălcescu” au fost gândite ca saloane aristocratice în aer liber. Cu foișoare de fanfară militară, alei de tei seculari și teatre de vară, ele reprezintă sufletul cultural al promenadelor citadine.</p>
+          </article>
+        </div>
+      </section>
+
+      <footer class="menu-footer">
+        <p>Roșiori Map &copy; 2026 · Parcuri & Zone Verzi din Municipiul Roșiorii de Vede</p>
+      </footer>
+    </div>
+  </section>
+
+  <!-- ==================== 3. EMPTY / BLANK SECTION VIEW ==================== -->
   <section id="view-empty-section" class="empty-section-view" hidden>
     <div class="empty-section-container">
       <nav class="empty-nav glass">
@@ -211,6 +289,12 @@
           <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg>
           <span>Meniu</span>
         </button>
+        <button id="btn-top-parks" class="chip chip-parks" type="button" aria-label="Parcuri & Zone Verzi" title="Deschide Parcuri & Zone Verzi">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor">
+            <path d="M12 2C9.24 2 7 4.24 7 7c0 .64.12 1.25.35 1.82C5.4 9.55 4 11.61 4 14c0 3.31 2.69 6 6 6h1v2h2v-2h1c3.31 0 6-2.69 6-6 0-2.39-1.4-4.45-3.35-5.18.23-.57.35-1.18.35-1.82 0-2.76-2.24-5-5-5z"/>
+          </svg>
+          <span>Parcuri</span>
+        </button>
         <button id="btn-my-res" class="chip" type="button" aria-label="Rezervările mele">
           <svg viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M19 4h-1V2h-2v2H8V2H6v2H5a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2Zm0 16H5V10h14v10ZM7 12h5v5H7z"/></svg>
           <span>Rezervările mele</span>
@@ -227,6 +311,14 @@
     <main class="layout">
       <aside class="sidebar glass" id="sidebar">
         <div class="sheet-handle" id="sheet-handle" aria-hidden="true"></div>
+        <div class="sidebar-mode-toggle" id="sidebar-mode-toggle" role="tablist">
+          <button class="mode-tab active" id="btn-mode-restaurants" type="button" role="tab" aria-selected="true">
+            <span>🍽️ Restaurante</span>
+          </button>
+          <button class="mode-tab" id="btn-mode-parks" type="button" role="tab" aria-selected="false">
+            <span>🌳 Parcuri & Agrement</span>
+          </button>
+        </div>
         <div class="search-wrap">
           <svg viewBox="0 0 24 24" width="18" height="18" class="search-ico"><path fill="currentColor" d="M15.5 14h-.8l-.3-.3A6.5 6.5 0 1 0 14 15.5l.3.3v.8l5 5 1.5-1.5-5-5Zm-6 0a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9Z"/></svg>
           <input id="search" type="search" placeholder="Caută restaurant, preparat…" autocomplete="off" />

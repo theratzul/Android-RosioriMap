@@ -15,12 +15,16 @@ const DATA_DIR = process.env.DATA_DIR || path.join(__dirname, 'var');
 const ADMIN_TOKEN = process.env.ADMIN_TOKEN || '';
 const PUBLIC_DIR = path.join(__dirname, 'public');
 const RESTAURANTS_FILE = path.join(PUBLIC_DIR, 'data', 'restaurants.json');
+const PARKS_FILE = path.join(PUBLIC_DIR, 'data', 'parks.json');
 const RES_FILE = path.join(DATA_DIR, 'reservations.json');
 
 fs.mkdirSync(DATA_DIR, { recursive: true });
 
 const restaurants = JSON.parse(fs.readFileSync(RESTAURANTS_FILE, 'utf8'));
 const byId = new Map(restaurants.map((r) => [r.id, r]));
+
+let parks = [];
+try { parks = JSON.parse(fs.readFileSync(PARKS_FILE, 'utf8')); } catch { parks = []; }
 
 let reservations = [];
 try { reservations = JSON.parse(fs.readFileSync(RES_FILE, 'utf8')); } catch { reservations = []; }
@@ -98,6 +102,7 @@ async function api(req, res, url) {
   const m = req.method;
 
   if (parts[1] === 'restaurants' && parts.length === 2 && m === 'GET') return send(res, 200, restaurants);
+  if (parts[1] === 'parks' && parts.length === 2 && m === 'GET') return send(res, 200, parks);
 
   if (parts[1] === 'restaurants' && parts[3] === 'availability' && m === 'GET') {
     const r = byId.get(parts[2]); const date = url.searchParams.get('date');
